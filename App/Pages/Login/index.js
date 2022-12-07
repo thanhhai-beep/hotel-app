@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from "react";
 import {
@@ -9,10 +10,12 @@ import {
     Button,
     TouchableOpacity,
 } from "react-native";
+import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 
 export default function LoginScreen() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
@@ -37,7 +40,10 @@ export default function LoginScreen() {
             <TouchableOpacity>
                 <Text style={styles.forgot_button}>Forgot Password?</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.loginBtn}>
+
+            <TouchableOpacity style={styles.loginBtn} onPress={() => {
+                navigation.navigate(SCREEN_NAMES.TabBar)
+            }}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
         </View>

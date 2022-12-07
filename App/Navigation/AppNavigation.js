@@ -5,13 +5,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { setNavRef } from '../Services/NavigationService';
 import HomeScreen from '../Pages/Home';
 import LoginScreen from "../Pages/Login"
-import { Image, SafeAreaView, Text, View } from 'react-native';
+import TestScreen from '../Pages/Test';
+import { Image, SafeAreaView, Text, View, TouchableOpacity } from 'react-native';
 import { useRef, useState } from 'react';
 
 const Stack = createStackNavigator();
 export const SCREEN_NAMES = {
     Home: "Home",
     Login: "Login",
+    Test: "Test",
+    TabBar: "TabBar"
 }
 
 const Tab = createBottomTabNavigator();
@@ -22,9 +25,14 @@ const TabBarConfigs = {
         // hightlight: images.home.icHightlightPondManage,
         title: "Trang chu"
     },
+    Test: {
+        // normal: images.home.icPondManage,
+        // hightlight: images.home.icHightlightPondManage,
+        title: "Test"
+    }
 }
 
-const MyTabBar = React.memo(({ state, descriptors, navigation }) => {
+const MyTabBar = ({ state, descriptors, navigation }) => {
     const focusedOptions = descriptors[state.routes[state.index].key].options;
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const ref = useRef(null);
@@ -58,33 +66,24 @@ const MyTabBar = React.memo(({ state, descriptors, navigation }) => {
                     });
                 };
 
-                const SIZE = 4;
-
-                if (isFocused)
-                    return (<View fast key={index} style={{ width: Metrics.screenWidth / SIZE }} center onPress={onPress}>
-                        <View center>
-                            <Image svg source={TabBarConfigs[route.name]?.hightlight} style={{ width: scaleSize(30), height: scaleSize(30) }} />
-                            <Text fS12 bold>{TabBarConfigs[route.name]?.title}</Text>
-                        </View>
-                    </View>);
-                return (<View fast key={index} style={{ width: Metrics.screenWidth / SIZE }} center onPress={onPress}>
+                return (<TouchableOpacity fast key={index} center onPress={onPress}>
                     <View center>
-                        <Image svg source={TabBarConfigs[route.name]?.normal} style={{ width: scaleSize(30), height: scaleSize(30) }} />
-                        <Text fS12 color={colors.greyScale500}>{TabBarConfigs[route.name]?.title}</Text>
+                        {/* <Image svg source={TabBarConfigs[route.name]?.normal} style={{ width: scaleSize(30), height: scaleSize(30) }} /> */}
+                        <Text fS12 style={{ color: isFocused ? '#673ab7' : '#222' }}>{TabBarConfigs[route.name]?.title}</Text>
                     </View>
-                </View>)
+                </TouchableOpacity>)
             })}
         </View>
     );
-});
+};
 
 function TabBar() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <Tab.Navigator initialRouteName={SCREEN_NAMES.Task} tabBar={props => <MyTabBar {...props} />} screenOptions={{ headerShown: false }}>
+            <Tab.Navigator initialRouteName={SCREEN_NAMES.Home} tabBar={props => <MyTabBar {...props} />} screenOptions={{ headerShown: false }}>
                 <Stack.Screen name={SCREEN_NAMES.Home} component={HomeScreen} />
-                <Stack.Screen name={SCREEN_NAMES.Login} component={LoginScreen} />
+                <Stack.Screen name={SCREEN_NAMES.Test} component={TestScreen} />
             </Tab.Navigator>
         </SafeAreaView>
     )
@@ -94,9 +93,8 @@ function MainStackScreen() {
     const navigation = useNavigation()
 
     return (
-        <Stack.Navigator initialRouteName={SCREEN_NAMES.Intro} screenOptions={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, headerShown: false }}>
+        <Stack.Navigator initialRouteName={SCREEN_NAMES.Login} screenOptions={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, headerShown: false }}>
             <Stack.Screen name={SCREEN_NAMES.Login} component={LoginScreen} />
-            <Stack.Screen name={SCREEN_NAMES.Home} component={HomeScreen} />
 
             <Stack.Screen name={SCREEN_NAMES.TabBar} component={TabBar} />
         </Stack.Navigator>
