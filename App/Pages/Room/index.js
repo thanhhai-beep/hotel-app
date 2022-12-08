@@ -9,7 +9,6 @@ import {
     Image
 } from "react-native";
 import Header from "../Layout/Header";
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import {
@@ -17,6 +16,8 @@ import {
     Avatar,
 } from '@rneui/themed';
 import { Rating } from 'react-native-ratings';
+import { Button } from "@rneui/base";
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 
 const room = [
@@ -59,6 +60,8 @@ const room = [
 export default function RoomScreen() {
     const [checkout, setCheckOut] = useState('01-01-2000');
     const [checkin, setCheckIn] = useState('01-01-2000');
+    const [price, setPrice] = useState('');
+    const [type, setType] = useState('01-01-2000');
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
     }
@@ -173,9 +176,34 @@ export default function RoomScreen() {
                             <TextInput
                                 style={styles.TextInput}
                                 placeholder="Price ($)"
-                                onChangeText={(username) => setUsername(username)}
+                                onChangeText={(price) => setPrice(price)}
                             />
                         </View>
+                    </View>
+                </View>
+                <View style={styles.formSearch}>
+                    <View style={styles.formControllButton}>
+                        <Button
+                            style={styles.btnSearch}
+                            title="Check"
+                            buttonStyle={{ backgroundColor: 'rgba(214, 61, 57, 1)' }}
+                            // icon={<Icon name="react" size={15} color="#0FF" />}
+                            containerStyle={{
+                                height: 40,
+                                width: 130,
+                                marginHorizontal: 50,
+                                marginVertical: 7,
+                                bottom: -5,
+                                left: -10,
+                                borderRadius: 5,
+                                position: "absolute",
+                                left: 160
+                            }}
+                            titleStyle={{
+                                color: 'white',
+                                marginHorizontal: 2,
+                            }}
+                        />
                     </View>
                 </View>
                 <View style={styles.result}>
@@ -233,6 +261,14 @@ const styles = StyleSheet.create({
     },
     formControll: {
         width: "48%"
+    },
+    formControllButton: {
+        width: "100%",
+        position: "relative",
+        height: 45,
+    },
+    btnSearch: {
+        // right: 10,
     },
     inputView: {
         backgroundColor: "#fdfdfded",

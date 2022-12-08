@@ -8,9 +8,11 @@ import LoginScreen from "../Pages/Login"
 import TestScreen from '../Pages/Test';
 import AccountScreen from '../Pages/Setting';
 import RoomScreen from '../Pages/Room';
+import HistoryScreen from '../Pages/Setting/BookingHistory';
 import { SafeAreaView, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRef, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import RegisterScreen from '../Pages/Login/Register';
 
 const Stack = createStackNavigator();
 export const SCREEN_NAMES = {
@@ -20,6 +22,8 @@ export const SCREEN_NAMES = {
     TabBar: "TabBar",
     Account: "Account",
     Room: "Room",
+    Register: "Register",
+    History: "History"
 }
 
 const Tab = createBottomTabNavigator();
@@ -46,7 +50,11 @@ const TabBarConfigs = {
     Room: {
         title: "Room",
         icon: "bed"
-    }
+    },
+    // History: {
+    //     title: "History",
+    //     icon: "history"
+    // }
 }
 
 const MyTabBar = ({ state, descriptors, navigation }) => {
@@ -87,9 +95,9 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
                     <View center style={styles.navItem}>
                         {/* <Image svg source={TabBarConfigs[route.name]?.normal} style={{ width: scaleSize(30), height: scaleSize(30) }} /> */}
                         <Icon name={TabBarConfigs[route.name]?.icon}
-                            style={styles.navIcon} style={{ color: isFocused ? '#673ab7' : '#222', fontSize: 20, }}>
+                            style={styles.navIcon} style={{ color: isFocused ? '#f57b51' : '#615d5d', fontSize: 20, }}>
                         </Icon>
-                        <Text fS12 style={styles.navTitle, { color: isFocused ? '#673ab7' : '#222' }}>
+                        <Text fS12 style={styles.navTitle, { color: isFocused ? '#f57b51' : '#615d5d' }}>
                             {TabBarConfigs[route.name]?.title}
                         </Text>
                     </View>
@@ -107,6 +115,7 @@ function TabBar() {
                 <Stack.Screen name={SCREEN_NAMES.Test} component={TestScreen} />
                 <Stack.Screen name={SCREEN_NAMES.Room} component={RoomScreen} />
                 <Stack.Screen name={SCREEN_NAMES.Account} component={AccountScreen} />
+                <Stack.Screen name={SCREEN_NAMES.History} component={HistoryScreen} />
             </Tab.Navigator>
         </SafeAreaView>
     )
@@ -118,6 +127,7 @@ function MainStackScreen() {
         <Stack.Navigator initialRouteName={SCREEN_NAMES.Login} screenOptions={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, headerShown: false }}>
             <Stack.Screen name={SCREEN_NAMES.Login} component={LoginScreen} />
             <Stack.Screen name={SCREEN_NAMES.TabBar} component={TabBar} />
+            <Stack.Screen name={SCREEN_NAMES.Register} component={RegisterScreen} />
         </Stack.Navigator>
     );
 }

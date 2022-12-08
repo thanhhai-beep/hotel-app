@@ -1,20 +1,49 @@
 import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import Icon from 'react-native-vector-icons/Ionicons';
+import IconF from 'react-native-vector-icons/FontAwesome';
+import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default () => {
     return (
         <View style={styles.headerFooterStyle}>
-            <Text style={styles.textStyle}>This is Footer</Text>
+            <View style={styles.footer}>
+                <View style={styles.footerItem}>
+                    <Text style={styles.footerTitle}>Contact Us</Text>
+                    <Text style={styles.contact}><Icon name="location-outline" />  590 Cach Mang Thang 8, Ward 11, District 3, Ho Chi Minh City.</Text>
+                    <Text style={styles.contact}><IconF name="phone" />  +84 123 456 789</Text>
+                    <Text style={styles.contact}><IconM name="email-open-outline" /> BambuuHotel@fpt.edu.vn</Text>
+                </View>
+                {/* <View style={{ width: "47%", paddingLeft: 15 }}>
+                    <Text style={styles.footerTitle}>Useful Links</Text>
+                    <Text style={styles.contact}><Icon name="location-outline" />  590 Cach Mang Thang 8, Ward 11, District 3, Ho Chi Minh City.</Text>
+                    <Text style={styles.contact}><IconF name="phone" />  +84 123 456 789</Text>
+                    <Text style={styles.contact}><IconM name="email-open-outline" /> BambuuHotel@fpt.edu.vn</Text>
+                </View> */}
+            </View>
         </View>
     );
 }
 const styles = StyleSheet.create({
     headerFooterStyle: {
-        width: '100%',
-        backgroundColor: '#212121',
-        padding: 30
+        backgroundColor: '#222',
+        padding: 25,
     },
-    textStyle: {
-        color: "#fff"
+    footer: {
+        flexDirection: "row",
+    },
+    footerItem: {
+        width: "100%",
+    },
+    footerTitle: {
+        color: "#fff",
+        fontWeight: "600",
+        fontSize: 20,
+        marginBottom: 21
+    },
+    contact: {
+        color: "#fff",
+        fontSize: 15,
+        marginBottom: 8,
     }
 });

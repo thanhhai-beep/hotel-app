@@ -44,6 +44,11 @@ export default function LoginScreen() {
             }}>
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+                navigation.navigate(SCREEN_NAMES.Register)
+            }}>
+                <Text style={{ paddingTop: 15 }}>Register</Text>
+            </TouchableOpacity>
         </View>
     );
 }

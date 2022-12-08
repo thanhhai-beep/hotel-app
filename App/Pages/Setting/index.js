@@ -1,4 +1,4 @@
-
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from "react";
 import {
     StyleSheet,
@@ -11,10 +11,11 @@ import {
     ListItem,
     Button
 } from '@rneui/themed';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 
 
 export default function AccountScreen() {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
@@ -37,7 +38,9 @@ export default function AccountScreen() {
                     </ListItem.Content>
                     <ListItem.Chevron />
                 </ListItem>
-                <ListItem bottomDivider>
+                <ListItem bottomDivider onPress={() => {
+                    navigation.navigate(SCREEN_NAMES.History)
+                }}>
                     <ListItem.Content>
                         <ListItem.Title>Booking history</ListItem.Title>
                     </ListItem.Content>
