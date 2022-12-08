@@ -1,61 +1,110 @@
-import { useNavigation } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
+
 import React, { useState } from "react";
 import {
     StyleSheet,
     Text,
     View,
-    Image,
     TextInput,
-    TouchableOpacity,
+    ImageBackground,
+    ScrollView,
 } from "react-native";
-import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
+import {
+    ListItem,
+    Avatar,
+} from '@rneui/themed';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import Banner from '../../Components/Banner';
+import Header from "../Layout/Header";
+
+const room = [
+    {
+        title: "Normal Room",
+        image: "https://uifaces.co/our-content/donated/KtCFjlD4.jpg",
+        price: 328,
+        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above."
+    },
+    {
+        title: "Normal Room",
+        image: "https://uifaces.co/our-content/donated/KtCFjlD4.jpg",
+        price: 328,
+        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above."
+    },
+    {
+        title: "Normal Room",
+        image: "https://uifaces.co/our-content/donated/KtCFjlD4.jpg",
+        price: 328,
+        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above."
+    },
+    {
+        title: "Normal Room",
+        image: "https://uifaces.co/our-content/donated/KtCFjlD4.jpg",
+        price: 328,
+        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above."
+    },
+    {
+        title: "Normal Room",
+        image: "https://uifaces.co/our-content/donated/KtCFjlD4.jpg",
+        price: 328,
+        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above."
+    },
+]
 
 export default function HomeScreen() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigation = useNavigation();
+    const [maphong, setMaphong] = useState("");
     return (
         <View style={styles.container}>
-            <Text style={styles.forgot_button}>Hone page</Text>
-            <Image style={styles.image} source={"https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.6435-9/157985198_107226558100114_7511267533103533790_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=174925&_nc_ohc=1qCkn46qX-cAX9mJdL6&tn=ZGLB9eSOaoqEcrGb&_nc_ht=scontent.fsgn5-6.fna&oh=00_AfDJThTtCXmV3x0LHzQvHcl_D9tD4H66fdfgvHvRAEwNow&oe=63B689BB"} />
-
-            <StatusBar style="auto" />
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Email."
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(email) => setEmail(email)}
-                />
-            </View>
-
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    placeholder="Password."
-                    placeholderTextColor="#003f5c"
-                    secureTextEntry={true}
-                    onChangeText={(password) => setPassword(password)}
-                />
-            </View>
-
-            <TouchableOpacity>
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.loginBtn}>
-                <Text style={styles.loginText}>LOGIN</Text>
-            </TouchableOpacity>
+            <Header />
+            <ScrollView style={styles.scrollView}>
+                <View style={styles.search}>
+                    <Icon name="search" style={styles.iconSearch}>
+                    </Icon>
+                    <TextInput tyle={styles.searchText}
+                        placeholder="Room"
+                        placeholderTextColor="#003f5c"
+                        onChangeText={(maphong) => setMaphong(maphong)} />
+                </View>
+                <Banner />
+                <View style={styles.listRoom}>
+                    <View style={{ paddingVertical: 8 }}>
+                        {room.map((l, i) => (
+                            <ListItem key={i} bottomDivider>
+                                <Avatar title={l.title} source={{ uri: l.image }} />
+                                <ListItem.Content>
+                                    <ListItem.Title>{l.title}</ListItem.Title>
+                                    <ListItem.Subtitle>{l.desc}</ListItem.Subtitle>
+                                </ListItem.Content>
+                                <ListItem.Chevron />
+                            </ListItem>
+                        ))}
+                    </View>
+                </View>
+            </ScrollView>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: "#fff",
+    },
+    search: {
+        position: "relative",
+        marginTop: 10,
+        height: 45,
+        backgroundColor: "#ededed",
+        borderRadius: 25,
+        marginBottom: 15,
         alignItems: "center",
-        justifyContent: "center",
+        paddingTop: 12,
+        paddingRight: 10,
+        marginLeft: "10%",
+        marginRight: "10%"
+    },
+    iconSearch: {
+        fontSize: 20,
+        fontWeight: 100,
+        position: "absolute",
+        right: 18,
+        top: 12,
     },
 });

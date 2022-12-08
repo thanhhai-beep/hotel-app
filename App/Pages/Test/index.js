@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from "react";
+import Header from "../Layout/Header";
 import {
     StyleSheet,
     Text,
@@ -13,8 +14,8 @@ import {
 export default function TestScreen() {
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.forgot_button}>Test page</Text>
+        <View style={styles.container}><Header />
+            <Text style={styles.forgot_button}>Test pagewww</Text>
         </View>
     );
 }
