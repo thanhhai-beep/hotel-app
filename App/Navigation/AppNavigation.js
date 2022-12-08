@@ -6,6 +6,8 @@ import { setNavRef } from '../Services/NavigationService';
 import HomeScreen from '../Pages/Home';
 import LoginScreen from "../Pages/Login"
 import TestScreen from '../Pages/Test';
+import AccountScreen from '../Pages/Setting';
+import RoomScreen from '../Pages/Room';
 import { SafeAreaView, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRef, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -16,7 +18,8 @@ export const SCREEN_NAMES = {
     Login: "Login",
     Test: "Test",
     TabBar: "TabBar",
-    Header: "Header"
+    Account: "Account",
+    Room: "Room",
 }
 
 const Tab = createBottomTabNavigator();
@@ -25,7 +28,7 @@ const TabBarConfigs = {
     Home: {
         // normal: images.home.icPondManage,
         // hightlight: images.home.icHightlightPondManage,
-        title: "Trang chu",
+        title: "Home",
         icon: "home"
     },
     Test: {
@@ -34,6 +37,16 @@ const TabBarConfigs = {
         title: "Test",
         icon: "forward"
     },
+    Account: {
+        // normal: images.home.icPondManage,
+        // hightlight: images.home.icHightlightPondManage,
+        title: "Account",
+        icon: "user-circle"
+    },
+    Room: {
+        title: "Room",
+        icon: "bed"
+    }
 }
 
 const MyTabBar = ({ state, descriptors, navigation }) => {
@@ -70,7 +83,7 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
                     });
                 };
 
-                return (<TouchableOpacity fast key={index} center onPress={onPress}>
+                return (<TouchableOpacity fast key={index} center onPress={onPress} style={styles.tabItem} >
                     <View center style={styles.navItem}>
                         {/* <Image svg source={TabBarConfigs[route.name]?.normal} style={{ width: scaleSize(30), height: scaleSize(30) }} /> */}
                         <Icon name={TabBarConfigs[route.name]?.icon}
@@ -92,6 +105,8 @@ function TabBar() {
             <Tab.Navigator initialRouteName={SCREEN_NAMES.Home} tabBar={props => <MyTabBar {...props} />} screenOptions={{ headerShown: false }}>
                 <Stack.Screen name={SCREEN_NAMES.Home} component={HomeScreen} />
                 <Stack.Screen name={SCREEN_NAMES.Test} component={TestScreen} />
+                <Stack.Screen name={SCREEN_NAMES.Room} component={RoomScreen} />
+                <Stack.Screen name={SCREEN_NAMES.Account} component={AccountScreen} />
             </Tab.Navigator>
         </SafeAreaView>
     )
@@ -130,11 +145,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#f6f6f6",
         height: 20,
         flexDirection: "row",
-        flexWrap: "wrap",
         paddingTop: 10,
         paddingLeft: 10,
         paddingRight: 10,
-        width: "100%",
+        // width: "100%",
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -142,11 +156,13 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.53,
         shadowRadius: 13.97,
-
         elevation: 21,
     },
+    tabItem: {
+        width: "25%",
+    },
     navItem: {
-        width: 100,
+        // width: 100,
         alignItems: "center",
         textAlign: "center",
     },

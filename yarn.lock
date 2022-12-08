@@ -1695,6 +1695,11 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
+"@react-native-picker/picker@^1.8.3":
+  version "1.16.8"
+  resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.16.8.tgz"
+  integrity sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"
@@ -1745,7 +1750,7 @@
     nanoid "^3.1.23"
     stacktrace-parser "^0.1.10"
 
-"@react-navigation/elements@^1.3.10", "@react-navigation/elements@^1.3.9":
+"@react-navigation/elements@^1.3.9":
   version "1.3.10"
   resolved "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.3.10.tgz"
   integrity sha512-JFaoZG9S+Zz291CvAMeGw8kNl/g2AaY9Pbo+VcYO+JM6UF/E5Obq9ga2ydxDrn3an7wzdl6flA/4lWhqG82Vqw==
@@ -1756,14 +1761,6 @@
   integrity sha512-SZVqxXUYVVXLIPqCpEQHaSBvZaUSpoyWbX9eEghCnjt1VlVraiNeTizoYzoVNIU+nDuSh96X+r666IA5SLV9nw==
   dependencies:
     color "^4.2.3"
-    warn-once "^0.1.0"
-
-"@react-navigation/native-stack@^6.9.5":
-  version "6.9.5"
-  resolved "https://registry.npmjs.org/@react-navigation/native-stack/-/native-stack-6.9.5.tgz"
-  integrity sha512-1ZIrla+b4gB8KDC6QewtZ/1yOS23bQctwR4Pf6ECA0stEH8ibbxh70iiI/LluL5CtWxrWfgOrl1jpQsVvtKY+Q==
-  dependencies:
-    "@react-navigation/elements" "^1.3.10"
     warn-once "^0.1.0"
 
 "@react-navigation/native@^6.0.16":
@@ -4608,6 +4605,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npmjs.org/lodash.isequal/-/lodash.isequal-4.5.0.tgz"
+  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
+
 lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/lodash.throttle/-/lodash.throttle-4.1.1.tgz"
@@ -5831,6 +5833,14 @@ react-native-navigation-drawer-extension@^4.3.1:
   version "4.3.1"
   resolved "https://registry.npmjs.org/react-native-navigation-drawer-extension/-/react-native-navigation-drawer-extension-4.3.1.tgz"
   integrity sha512-WA6Bzm4+jkHfqD7HgftDzsoS/nM7GwkE9FzXtHls7sYLXW8EVOeh1ks6DrxzDC7rmEe57wsTAwtV6bGtY9mtFA==
+
+react-native-picker-select@^8.0.4:
+  version "8.0.4"
+  resolved "https://registry.npmjs.org/react-native-picker-select/-/react-native-picker-select-8.0.4.tgz"
+  integrity sha512-orBjPIwBkV5oipyVw263YNMI56f6Kj3p/ejabZoCYYNSG3AiLVVhC2RqsxMgDA7IayyURAW+AlV+mDJyVqLBkg==
+  dependencies:
+    "@react-native-picker/picker" "^1.8.3"
+    lodash.isequal "^4.5.0"
 
 react-native-ratings@^8.1.0:
   version "8.1.0"
