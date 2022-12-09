@@ -8,6 +8,8 @@ import LoginScreen from "../Pages/Login"
 import TestScreen from '../Pages/Test';
 import AccountScreen from '../Pages/Setting';
 import RoomScreen from '../Pages/Room';
+import ProfileScreen from '../Pages/Setting/Profile'
+import RoomDetailScreen from '../Pages/Room/RoomDetail'
 import HistoryScreen from '../Pages/Setting/BookingHistory';
 import { SafeAreaView, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRef, useState } from 'react';
@@ -23,7 +25,9 @@ export const SCREEN_NAMES = {
     Account: "Account",
     Room: "Room",
     Register: "Register",
-    History: "History"
+    History: "History",
+    Profile: "Profile",
+    RoomDetail: "RoomDetail"
 }
 
 const Tab = createBottomTabNavigator();
@@ -116,6 +120,8 @@ function TabBar() {
                 <Stack.Screen name={SCREEN_NAMES.Room} component={RoomScreen} />
                 <Stack.Screen name={SCREEN_NAMES.Account} component={AccountScreen} />
                 <Stack.Screen name={SCREEN_NAMES.History} component={HistoryScreen} />
+                <Stack.Screen name={SCREEN_NAMES.Profile} component={ProfileScreen} />
+                <Stack.Screen name={SCREEN_NAMES.RoomDetail} component={RoomDetailScreen} />
             </Tab.Navigator>
         </SafeAreaView>
     )

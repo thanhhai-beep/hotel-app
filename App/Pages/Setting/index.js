@@ -32,7 +32,9 @@ export default function AccountScreen() {
                         dohai30112002@gmail.com
                     </Text>
                 </View>
-                <ListItem bottomDivider>
+                <ListItem bottomDivider onPress={() => {
+                    navigation.navigate(SCREEN_NAMES.Profile)
+                }}>
                     <ListItem.Content>
                         <ListItem.Title>Profile</ListItem.Title>
                     </ListItem.Content>

@@ -17,7 +17,9 @@ import {
 } from '@rneui/themed';
 import { Rating } from 'react-native-ratings';
 import { Button } from "@rneui/base";
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
+import { useNavigation } from '@react-navigation/native';
+import Footer from "../Layout/Footer";
 
 
 const room = [
@@ -61,10 +63,11 @@ export default function RoomScreen() {
     const [checkout, setCheckOut] = useState('01-01-2000');
     const [checkin, setCheckIn] = useState('01-01-2000');
     const [price, setPrice] = useState('');
-    const [type, setType] = useState('01-01-2000');
+    const [type, setType] = useState('');
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
-    }
+    };
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <Header />
@@ -210,7 +213,9 @@ export default function RoomScreen() {
                     <View style={styles.listRoom}>
                         <View style={{ paddingVertical: 5 }}>
                             {room.map((l, i) => (
-                                <ListItem key={i} bottomDivider>
+                                <ListItem key={i} bottomDivider onPress={() => {
+                                    navigation.navigate(SCREEN_NAMES.RoomDetail)
+                                }}>
                                     <Avatar title={l.title} source={{ uri: l.image }} style={styles.imageRoom} />
                                     <ListItem.Content>
                                         <ListItem.Title style={styles.nameRoom}>{l.title}</ListItem.Title>
@@ -235,6 +240,7 @@ export default function RoomScreen() {
                         </View>
                     </View>
                 </View>
+                <Footer />
             </ScrollView>
         </View>
     );
@@ -266,9 +272,6 @@ const styles = StyleSheet.create({
         width: "100%",
         position: "relative",
         height: 45,
-    },
-    btnSearch: {
-        // right: 10,
     },
     inputView: {
         backgroundColor: "#fdfdfded",

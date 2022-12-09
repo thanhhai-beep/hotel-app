@@ -9,11 +9,23 @@ import {
     TouchableOpacity,
 } from "react-native";
 import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
+import { login } from '../../repositories/SettingRepository';
+import axios from 'axios'
 
 export default function LoginScreen() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState('admin');
+    const [password, setPassword] = useState("12345678");
     const navigation = useNavigation();
+    const handleLogin = async () => {
+        const data = {
+            username: username,
+            password: password
+        }
+        const result = await login(data);
+        if (result) {
+            navigation.navigate(SCREEN_NAMES.TabBar)
+        }
+    }
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
@@ -21,6 +33,7 @@ export default function LoginScreen() {
             <View style={styles.inputView}>
                 <TextInput
                     style={styles.TextInput}
+                    value={username}
                     placeholder="Username"
                     placeholderTextColor="#003f5c"
                     onChangeText={(username) => setUsername(username)}
@@ -29,6 +42,7 @@ export default function LoginScreen() {
             <View style={styles.inputView}>
                 <TextInput
                     style={styles.TextInput}
+                    value={password}
                     placeholder="Password"
                     placeholderTextColor="#003f5c"
                     secureTextEntry={true}
@@ -39,9 +53,9 @@ export default function LoginScreen() {
                 <Text style={styles.forgot_button}>Forgot Password?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginBtn} onPress={() => {
-                navigation.navigate(SCREEN_NAMES.TabBar)
-            }}>
+            <TouchableOpacity style={styles.loginBtn}
+                onPress={handleLogin}
+            >
                 <Text style={styles.loginText}>LOGIN</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
@@ -80,7 +94,7 @@ const styles = StyleSheet.create({
         height: 50,
         flex: 1,
         padding: 10,
-        marginLeft: 20,
+        marginLeft: 10,
     },
     forgot_button: {
         height: 30,
