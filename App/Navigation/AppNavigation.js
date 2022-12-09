@@ -97,7 +97,6 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
 
                 return (<TouchableOpacity fast key={index} center onPress={onPress} style={styles.tabItem} >
                     <View center style={styles.navItem}>
-                        {/* <Image svg source={TabBarConfigs[route.name]?.normal} style={{ width: scaleSize(30), height: scaleSize(30) }} /> */}
                         <Icon name={TabBarConfigs[route.name]?.icon}
                             style={styles.navIcon} style={{ color: isFocused ? '#f57b51' : '#615d5d', fontSize: 20, }}>
                         </Icon>
@@ -130,7 +129,7 @@ function MainStackScreen() {
     const navigation = useNavigation()
 
     return (
-        <Stack.Navigator initialRouteName={SCREEN_NAMES.Login} screenOptions={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, headerShown: false }}>
+        <Stack.Navigator initialRouteName={SCREEN_NAMES.TabBar} screenOptions={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, headerShown: false }}>
             <Stack.Screen name={SCREEN_NAMES.Login} component={LoginScreen} />
             <Stack.Screen name={SCREEN_NAMES.TabBar} component={TabBar} />
             <Stack.Screen name={SCREEN_NAMES.Register} component={RegisterScreen} />

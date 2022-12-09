@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -9,13 +9,22 @@ import {
 import {
     Avatar,
     ListItem,
-    Button
 } from '@rneui/themed';
 import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function AccountScreen() {
     const navigation = useNavigation();
+    const [user, setUser] = useState("");
+    const [email, setEmail] = useState("");
+    useEffect(() => {
+        getData()
+    }, [])
+    async function getData() {
+        setUser(await AsyncStorage.getItem('username'))
+        setEmail(await AsyncStorage.getItem('email'))
+    }
     return (
         <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
@@ -26,10 +35,10 @@ export default function AccountScreen() {
                         source={{ uri: 'https://cdn.pixabay.com/photo/2020/09/18/05/58/lights-5580916__340.jpg' }}
                     />
                     <Text style={styles.fullName}>
-                        Thanh Hai
+                        {user}
                     </Text>
                     <Text style={styles.email}>
-                        dohai30112002@gmail.com
+                        {email}
                     </Text>
                 </View>
                 <ListItem bottomDivider onPress={() => {

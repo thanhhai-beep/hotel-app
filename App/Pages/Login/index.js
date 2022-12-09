@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -10,22 +10,46 @@ import {
 } from "react-native";
 import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 import { login } from '../../repositories/SettingRepository';
-import axios from 'axios'
+import { Dialog } from '@rneui/themed';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
     const [username, setUsername] = useState('admin');
     const [password, setPassword] = useState("12345678");
     const navigation = useNavigation();
+    const [loading, setLoad] = useState(false);
+    useEffect(() => {
+        checkLogin()
+    }, [])
+    async function checkLogin() {
+        setLoad(true)
+        var login = await AsyncStorage.getItem('loginStatus')
+        if (login = 1) {
+            setLoad(false)
+            navigation.navigate(SCREEN_NAMES.TabBar)
+        }
+    }
     const handleLogin = async () => {
+        setLoad(true)
         const data = {
             username: username,
             password: password
         }
         const result = await login(data);
         if (result) {
+            await AsyncStorage.setItem('username', result.username)
+            await AsyncStorage.setItem('name', result.fullName)
+            await AsyncStorage.setItem('email', result.email)
+            await AsyncStorage.setItem('birthday', result.birthday)
+            await AsyncStorage.setItem('phone', result.phoneNumber)
+            await AsyncStorage.setItem('loginStatus', "1")
+            setLoad(false)
             navigation.navigate(SCREEN_NAMES.TabBar)
         }
     }
+    const loadingPage = () => {
+        setLoad(!loading);
+    };
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
@@ -63,6 +87,9 @@ export default function LoginScreen() {
             }}>
                 <Text style={{ paddingTop: 15 }}>Register</Text>
             </TouchableOpacity>
+            <Dialog isVisible={loading} onBackdropPress={loadingPage}>
+                <Dialog.Loading />
+            </Dialog>
         </View>
     );
 }
