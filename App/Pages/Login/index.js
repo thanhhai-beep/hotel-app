@@ -24,7 +24,7 @@ export default function LoginScreen() {
     async function checkLogin() {
         setLoad(true)
         var login = await AsyncStorage.getItem('loginStatus')
-        if (login = 1) {
+        if (login != 1) {
             setLoad(false)
             navigation.navigate(SCREEN_NAMES.TabBar)
         }

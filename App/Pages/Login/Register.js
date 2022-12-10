@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import DatePicker from 'react-native-datepicker';
 import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
+import RNPickerSelect from 'react-native-picker-select';
 
 export default function RegisterScreen() {
     const [username, setUsername] = useState("");
@@ -22,6 +23,19 @@ export default function RegisterScreen() {
     const [gender, setGender] = useState("");
     const navigation = useNavigation();
     const image = { uri: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp" };
+
+    const data = {
+        username: username,
+        password: password,
+        email: email,
+        fullname: fullname,
+        phone: phone,
+        gender: gender,
+        birthday: birthday
+    }
+    const handleRegister = () => {
+        console.log(data);
+    }
     return (
         <View style={styles.container}>
             <ImageBackground source={image} resizeMode="cover" style={styles.image}>
@@ -125,12 +139,24 @@ export default function RegisterScreen() {
                         </View>
                     </View>
                     <View style={styles.formGroup}>
+                        <Text style={styles.label}>Gender:</Text>
+                        <View style={styles.inputViewSelect}>
+                            <RNPickerSelect
+                                onValueChange={(value) => setGender(value)}
+                                items={[
+                                    { label: 'Famale', value: 'Famale' },
+                                    { label: 'Male', value: 'Male' },
+                                ]}
+                            />
+                        </View>
+                    </View>
+                    <View style={styles.formGroup}>
                         <TouchableOpacity style={styles.cancelBtn} onPress={() => {
-                            navigation.navigate(SCREEN_NAMES.Login)
+                            navigation.navigate(SCREEN_NAMES.TabBar)
                         }}>
                             <Text style={styles.loginText}>Cancel</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.loginBtn}>
+                        <TouchableOpacity style={styles.loginBtn} onPress={handleRegister}>
                             <Text style={styles.loginText}>Register</Text>
                         </TouchableOpacity>
                     </View>
@@ -139,7 +165,6 @@ export default function RegisterScreen() {
         </View>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -179,6 +204,18 @@ const styles = StyleSheet.create({
         lineHeight: 84,
         marginLeft: 20,
         width: "65%"
+    },
+    inputViewSelect: {
+        backgroundColor: "#fdfdfded",
+        borderRadius: 8,
+        height: 40,
+        marginBottom: 20,
+        alignItems: "center",
+        lineHeight: 84,
+        width: "65%",
+        marginLeft: 20,
+        paddingTop: 10,
+        paddingLeft: 100
     },
     TextInput: {
         height: 50,
