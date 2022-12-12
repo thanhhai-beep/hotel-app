@@ -147,6 +147,9 @@ export default function HomeScreen() {
                                 color: 'white',
                                 marginHorizontal: 2,
                             }}
+                            onPress={() => {
+                                navigation.navigate(SCREEN_NAMES.Contact)
+                            }}
                         />
                     </View>
                 </View>

@@ -31,6 +31,7 @@ export const SCREEN_NAMES = {
     Profile: "Profile",
     RoomDetail: "RoomDetail",
     RoomTypeList: "RoomTypeList",
+    Contact: "Contact"
 }
 
 const Tab = createBottomTabNavigator();
@@ -121,6 +122,7 @@ function TabBar() {
                 <Stack.Screen name={SCREEN_NAMES.Profile} component={ProfileScreen} />
                 <Stack.Screen name={SCREEN_NAMES.RoomDetail} component={RoomDetailScreen} />
                 <Stack.Screen name={SCREEN_NAMES.RoomTypeList} component={RoomTypeScreen} />
+                <Stack.Screen name={SCREEN_NAMES.Contact} component={ContactScreen} />
             </Tab.Navigator>
         </SafeAreaView>
     )
