@@ -5,11 +5,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { setNavRef } from '../Services/NavigationService';
 import HomeScreen from '../Pages/Home';
 import LoginScreen from "../Pages/Login"
-import TestScreen from '../Pages/Test';
+import ServicesScreen from '../Pages/Service';
 import AccountScreen from '../Pages/Setting';
 import RoomScreen from '../Pages/Room';
 import ProfileScreen from '../Pages/Setting/Profile'
 import RoomDetailScreen from '../Pages/Room/RoomDetail'
+import RoomTypeScreen from '../Pages/Room/RoomType';
+import ContactScreen from '../Pages/Home/ContactUs';
 import HistoryScreen from '../Pages/Setting/BookingHistory';
 import { SafeAreaView, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRef, useState } from 'react';
@@ -20,14 +22,15 @@ const Stack = createStackNavigator();
 export const SCREEN_NAMES = {
     Home: "Home",
     Login: "Login",
-    Test: "Test",
+    Service: "Service",
     TabBar: "TabBar",
     Account: "Account",
     Room: "Room",
     Register: "Register",
     History: "History",
     Profile: "Profile",
-    RoomDetail: "RoomDetail"
+    RoomDetail: "RoomDetail",
+    RoomTypeList: "RoomTypeList",
 }
 
 const Tab = createBottomTabNavigator();
@@ -39,10 +42,10 @@ const TabBarConfigs = {
         title: "Home",
         icon: "home"
     },
-    Test: {
+    Service: {
         // normal: images.home.icPondManage,
         // hightlight: images.home.icHightlightPondManage,
-        title: "Test",
+        title: "Services",
         icon: "forward"
     },
     Account: {
@@ -55,10 +58,6 @@ const TabBarConfigs = {
         title: "Room",
         icon: "bed"
     },
-    // History: {
-    //     title: "History",
-    //     icon: "history"
-    // }
 }
 
 const MyTabBar = ({ state, descriptors, navigation }) => {
@@ -115,12 +114,13 @@ function TabBar() {
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
             <Tab.Navigator initialRouteName={SCREEN_NAMES.Home} tabBar={props => <MyTabBar {...props} />} screenOptions={{ headerShown: false }}>
                 <Stack.Screen name={SCREEN_NAMES.Home} component={HomeScreen} />
-                <Stack.Screen name={SCREEN_NAMES.Test} component={TestScreen} />
+                <Stack.Screen name={SCREEN_NAMES.Service} component={ServicesScreen} />
                 <Stack.Screen name={SCREEN_NAMES.Room} component={RoomScreen} />
                 <Stack.Screen name={SCREEN_NAMES.Account} component={AccountScreen} />
                 <Stack.Screen name={SCREEN_NAMES.History} component={HistoryScreen} />
                 <Stack.Screen name={SCREEN_NAMES.Profile} component={ProfileScreen} />
                 <Stack.Screen name={SCREEN_NAMES.RoomDetail} component={RoomDetailScreen} />
+                <Stack.Screen name={SCREEN_NAMES.RoomTypeList} component={RoomTypeScreen} />
             </Tab.Navigator>
         </SafeAreaView>
     )

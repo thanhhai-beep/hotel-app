@@ -84,7 +84,7 @@ export default function AccountScreen() {
                         </Text>
                     </View>
                     <ListItem bottomDivider onPress={() => {
-                        navigation.navigate(SCREEN_NAMES.Register)
+                        navigation.navigate(SCREEN_NAMES.Profile)
                     }}>
                         <ListItem.Content>
                             <ListItem.Title>Profile</ListItem.Title>

@@ -4,9 +4,8 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
     ScrollView,
-    TextInput
+    TextInput,
 } from "react-native";
 import Footer from "../Layout/Footer";
 import { Rating } from 'react-native-ratings';
@@ -14,7 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { Button } from '@rneui/themed';
 import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
-
+import { ImageSlider } from "react-native-image-slider-banner";
 export default function RoomScreen() {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -24,7 +23,6 @@ export default function RoomScreen() {
     const [type, setType] = useState('');
     const [checkout, setCheckOut] = useState('01-01-2000');
     const [checkin, setCheckIn] = useState('01-01-2000');
-    const image = { uri: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp" };
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
     }
@@ -33,11 +31,17 @@ export default function RoomScreen() {
             <Header />
             <ScrollView style={styles.scrollView}>
                 <View style={styles.room}>
-                    <Image style={styles.imageDefault} source={image} />
-                    <View style={styles.right}>
-                        <Image style={styles.imageRight} source={image} />
-                        <Image style={styles.imageRight} source={image} />
-                    </View>
+                    <ImageSlider
+                        data={[
+                            { img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU' },
+                            { img: 'https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg' },
+                            { img: 'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg' }
+                        ]}
+                        autoPlay={false}
+                        onItemChanged={(item) => console.log("item", item)}
+                        closeIconColor="#fff"
+                        indicatorContainerStyle={{ top: 10 }}
+                    />
                 </View>
                 <View style={styles.roomText}>
                     <View style={styles.topTitle}>
@@ -277,23 +281,8 @@ const styles = StyleSheet.create({
     },
     room: {
         flexDirection: "row",
-        padding: 20,
-        paddingBottom: 10
-    },
-    imageDefault: {
-        width: "63%",
-        height: 180,
-        borderRadius: 10
-    },
-    right: {
-        width: "37%",
-        paddingLeft: 10
-    },
-    imageRight: {
-        width: "100%",
-        height: 85,
-        borderRadius: 10,
-        marginBottom: 10
+        paddingBottom: 10,
+        height: 250,
     },
     roomText: {
         paddingLeft: 20,

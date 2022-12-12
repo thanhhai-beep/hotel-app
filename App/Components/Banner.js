@@ -1,17 +1,26 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
     StyleSheet,
     Text,
     View,
-    TextInput,
-    ImageBackground
+    ImageBackground,
+    TouchableOpacity
 } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { SCREEN_NAMES } from '../Navigation/AppNavigation';
 // import { ImageSlider } from "react-native-image-slider-banner";
 
 
 export default function Banner() {
+    const navigation = useNavigation();
     const image = { uri: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp" };
+    const type = (room) => {
+        navigation.navigate({
+            name: 'RoomTypeList',
+            params: { type: room },
+        });
+    }
     return (
         <View style={styles.banner}>
             {/* <ImageSlider
@@ -24,26 +33,26 @@ export default function Banner() {
                 onItemChanged={(item) => console.log("item", item)}
                 closeIconColor="#fff"
             /> */}
-            <View style={styles.bannerItem}>
+            <TouchableOpacity style={styles.bannerItem} onPress={() => type("Normal")}>
                 <ImageBackground source={image} resizeMode="cover" style={styles.image}>
                     <Text style={styles.bannerTitle}>
                         Normal Room
                     </Text>
                     <Text style={styles.guest}>
-                        <Icon name="users" />2 Guests
+                        <Icon name="users" />  2 Guests
                     </Text>
                 </ImageBackground>
-            </View>
-            <View style={styles.bannerItem}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.bannerItem} onPress={() => type("VIP")}>
                 <ImageBackground source={image} resizeMode="cover" style={styles.image}>
                     <Text style={styles.bannerTitle}>
-                        Normal Room
+                        Vip Room
                     </Text>
                     <Text style={styles.guest}>
-                        <Icon name="users" />2 Guests
+                        <Icon name="users" />  5 Guests
                     </Text>
                 </ImageBackground>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -65,14 +74,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     bannerTitle: {
-        color: "#000666",
+        color: "#f57b51",
         fontSize: 19,
         fontStyle: "italic",
         left: 10,
         bottom: -40,
     },
     guest: {
-        color: "#000666",
+        color: "#555555",
         fontSize: 15,
         fontStyle: "italic",
         left: 10,

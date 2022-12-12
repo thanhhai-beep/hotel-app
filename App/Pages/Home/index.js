@@ -1,4 +1,4 @@
-
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from "react";
 import {
     StyleSheet,
@@ -6,7 +6,8 @@ import {
     View,
     TextInput,
     ScrollView,
-    Image
+    Image,
+    ImageBackground, TouchableOpacity
 } from "react-native";
 import {
     ListItem,
@@ -19,7 +20,9 @@ import { Button } from "@rneui/base";
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Footer from "../Layout/Footer";
 import { useSelector, useDispatch } from 'react-redux';
+import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 import { increment, decrement } from '../../Redux/Actions/action';
+import { BASEAPI } from '@env';
 
 const imageBg = require('../../../assets/bottom.jpeg');
 const imageTop = require('../../../assets/top.jpeg')
@@ -62,6 +65,7 @@ const room = [
     },
 ]
 export default function HomeScreen() {
+    const navigation = useNavigation();
     const [maphong, setMaphong] = useState("");
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
@@ -71,6 +75,7 @@ export default function HomeScreen() {
     const handleIncrement = () => {
         dispatch(increment());
     };
+    const image = { uri: `${BASEAPI}/images/bg.jpg` };
     return (
         <View style={styles.container}>
             <Header />
@@ -91,9 +96,9 @@ export default function HomeScreen() {
                     <View style={{ paddingVertical: 5 }}>
                         {room.map((l, i) => (
                             <ListItem key={i} bottomDivider>
-                                <Avatar title={l.title} source={{ uri: l.image }} style={styles.imageRoom} />
+                                <Avatar source={{ uri: l.image }} style={styles.imageRoom} />
                                 <ListItem.Content>
-                                    <ListItem.Title style={styles.nameRoom}>{l.title}</ListItem.Title>
+                                    <ListItem.Title style={styles.nameRoom}>{l.title}     ID: 102</ListItem.Title>
                                     <Rating
                                         type='custom'
                                         ratingColor='gold'
@@ -144,6 +149,28 @@ export default function HomeScreen() {
                             }}
                         />
                     </View>
+                </View>
+                <View style={styles.contact}>
+                    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+                        <Text style={{
+                            fontSize: 20, alignItems: "center", textAlign: "center",
+                            paddingLeft: 40,
+                            paddingRight: 40,
+                            color: "#fff",
+                        }}>Enjoy a Luxury experience. Discover our location. Relax and enjoy your holiday</Text>
+                        <View style={{ flexDirection: "row", justifyContent: "center", top: 20, }}>
+                            <TouchableOpacity style={styles.bookBtn} onPress={() => {
+                                navigation.navigate(SCREEN_NAMES.Room)
+                            }}>
+                                <Text style={{ fontSize: 16, color: "#fff", fontWeight: "500" }}>Book Now</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.contactBtn} onPress={() => {
+                                navigation.navigate(SCREEN_NAMES.Contact)
+                            }}>
+                                <Text style={{ fontSize: 16, color: "#fff", fontWeight: "500" }}>Contact Us</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ImageBackground>
                 </View>
                 <Footer />
             </ScrollView>
@@ -235,5 +262,28 @@ const styles = StyleSheet.create({
         top: 35,
         borderWidth: 2,
         borderColor: "#ebebeb"
+    },
+    contact: {
+        width: "100%",
+        height: 200
+    },
+    image: {
+        flex: 1,
+        justifyContent: "center",
+        width: "100%",
+    },
+    bookBtn: {
+        padding: 10,
+        borderRadius: 10,
+        marginRight: 10,
+        paddingLeft: 20,
+        paddingRight: 20
+    },
+    contactBtn: {
+        padding: 10,
+        backgroundColor: "rgba(214, 61, 57, 1)",
+        borderRadius: 6,
+        paddingLeft: 20,
+        paddingRight: 20
     }
 });
