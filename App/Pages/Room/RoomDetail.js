@@ -52,7 +52,7 @@ export default function RoomDetailScreen(props) {
                                     ]}
                                     autoPlay={false}
                                     onItemChanged={(item) => console.log("item", item)}
-                                    closeIconColor="#fff"
+                                    closeIconColor="#444"
                                     indicatorContainerStyle={{ top: 10 }}
                                 />
                             </View>
