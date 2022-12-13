@@ -153,6 +153,25 @@ export default function HomeScreen() {
                         />
                     </View>
                 </View>
+                <View>
+                    <View style={styles.aboutUs}>
+                        <Image source={{ uri: `${BASEAPI}/images/videobg.jpg` }} style={styles.imageAboutHotel} />
+                        <View style={styles.rightAbout}>
+                            <Text style={{ color: "#f57b51", marginBottom: 10 }}>Discover our Locations</Text>
+                            <Text style={{ fontSize: 18 }}>Many Years of Hotels and Resort Experience</Text>
+                        </View>
+                    </View>
+                    <Text style={styles.aboutText}><Icon name='check' style={{ fontSize: 10 }} /> We make the best for all our customers</Text>
+                    <Text style={styles.aboutText}><Icon name='check' style={{ fontSize: 10 }} /> Follow our Resort Luxury Hotel</Text>
+                    <Text style={styles.aboutText}><Icon name='check' style={{ fontSize: 10 }} /> Luxury hotel and best resort</Text>
+                    <Text style={styles.aboutText}><Icon name='check' style={{ fontSize: 10 }} /> Double rooms and family rooms</Text>
+                    <Text style={styles.aboutText}><Icon name='check' style={{ fontSize: 10 }} /> Enjoy a luxury experience</Text>
+                    <TouchableOpacity style={styles.bookCheck} onPress={() => {
+                        navigation.navigate(SCREEN_NAMES.About)
+                    }}>
+                        <Text style={{ fontSize: 16, color: "#fff", fontWeight: "500" }}>Check All Packages</Text>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.contact}>
                     <ImageBackground source={image} resizeMode="cover" style={styles.image}>
                         <Text style={{
@@ -288,5 +307,36 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         paddingLeft: 20,
         paddingRight: 20
+    },
+    aboutUs: {
+        flexDirection: "row",
+        width: "100%",
+        height: 170,
+        padding: 15,
+        paddingTop: 25
+    },
+    imageAboutHotel: {
+        width: "50%",
+        borderRadius: 10,
+    },
+    rightAbout: {
+        width: "50%",
+        paddingLeft: 20,
+        paddingTop: 20
+    },
+    aboutText: {
+        color: "#777777",
+        paddingLeft: 20,
+        marginBottom: 8
+    },
+    bookCheck: {
+        backgroundColor: "rgba(214, 61, 57, 1)",
+        padding: 15,
+        alignItems: "center",
+        marginTop: 10,
+        marginLeft: 20,
+        borderRadius: 5,
+        width: 200,
+        marginBottom: 30
     }
 });

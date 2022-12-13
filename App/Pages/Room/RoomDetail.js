@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Layout/Header";
 import {
     StyleSheet,
@@ -10,82 +10,105 @@ import {
 import Footer from "../Layout/Footer";
 import { Rating } from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import IconF from 'react-native-vector-icons/FontAwesome';
 import { Button } from '@rneui/themed';
 import DatePicker from 'react-native-datepicker';
-import RNPickerSelect from 'react-native-picker-select';
 import { ImageSlider } from "react-native-image-slider-banner";
-export default function RoomScreen() {
+import { getRoomDetail } from '../../repositories/RoomRepository';
+import { BASEAPI } from '@env';
+
+export default function RoomDetailScreen(props) {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const [room, setRoom] = useState('');
-    const [price, setPrice] = useState('');
-    const [type, setType] = useState('');
+    const [room, setRoom] = useState(props.route.params.roomNumber);
+    const [price, setPrice] = useState(props.route.params.price);
+    const [type, setType] = useState(props.route.params.type);
     const [checkout, setCheckOut] = useState('01-01-2000');
     const [checkin, setCheckIn] = useState('01-01-2000');
+    const [roomResult, setRoomResult] = useState(null);
+    let roomId = props.route.params.roomId;
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
+    }
+    useEffect(() => {
+        roomDetail()
+    }, [])
+    const roomDetail = async () => {
+        var data = await getRoomDetail(roomId)
+        setRoomResult(data)
     }
     return (
         <View style={styles.container}>
             <Header />
             <ScrollView style={styles.scrollView}>
-                <View style={styles.room}>
-                    <ImageSlider
-                        data={[
-                            { img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5a5uCP-n4teeW2SApcIqUrcQApev8ZVCJkA&usqp=CAU' },
-                            { img: 'https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg' },
-                            { img: 'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg' }
-                        ]}
-                        autoPlay={false}
-                        onItemChanged={(item) => console.log("item", item)}
-                        closeIconColor="#fff"
-                        indicatorContainerStyle={{ top: 10 }}
-                    />
-                </View>
-                <View style={styles.roomText}>
-                    <View style={styles.topTitle}>
-                        <Text style={styles.title}>
-                            Homie Hotel Room
-                        </Text>
-                        <Text style={styles.titleRight}>
-                            ID:444
-                        </Text>
-                    </View>
-                    <Text>
-                        <Rating
-                            type='custom'
-                            ratingColor='gold'
-                            ratingBackgroundColor='#c8c7c8'
-                            ratingCount={5}
-                            imageSize={11}
-                            onFinishRating={ratingCompleted}
-                            style={{ paddingVertical: 3 }}
-                            startingValue={4}
-                        />
-                    </Text>
-                    <Text style={styles.price}>
-                        Book for 508$
-                    </Text>
-                    <View style={styles.guest}>
-                        <Icon name="users" style={styles.icon} />
-                        <Text style={styles.textGuest} >2-4 Customers</Text>
-                        <Icon name="bed" style={styles.icon} />
-                        <Text style={styles.textGuest} >4sqft</Text>
-                    </View>
-                    <Text style={styles.desc}>
-                        Fully furnished, luxurious furniture, service, room of 3-star standard or above, attentive service staffs, especially, the room is very modern.
-                    </Text>
-                    <View style={styles.footerRoom}>
-                        <Icon name="users" style={styles.iconFooter} />
-                        <Text style={styles.lineBorder}></Text>
-                        <Icon name="bed" style={styles.iconFooter} />
-                        <Text style={styles.lineBorder}></Text>
-                        <Icon name="users" style={styles.iconFooter} />
-                        <Text style={styles.lineBorder}></Text>
-                        <Icon name="bed" style={styles.iconFooter} />
-                    </View>
-                </View>
+                {roomResult ?
+                    roomResult.map((l, i) => (
+                        <View >
+                            <View style={styles.room}>
+                                <ImageSlider
+                                    data={[
+                                        { img: `${BASEAPI}${l.hinhAnh}` },
+                                    ]}
+                                    autoPlay={false}
+                                    onItemChanged={(item) => console.log("item", item)}
+                                    closeIconColor="#fff"
+                                    indicatorContainerStyle={{ top: 10 }}
+                                />
+                            </View>
+                            <View style={styles.roomText}>
+                                <View style={styles.topTitle}>
+                                    <Text style={styles.title}>
+                                        {l.loaiPhong.tenLoaiPhong} Room
+                                    </Text>
+                                    <Text style={styles.titleRight}>
+                                        ID:{l.soPhong}
+                                    </Text>
+                                </View>
+                                <Text>
+                                    <Rating
+                                        type='custom'
+                                        ratingColor='gold'
+                                        ratingBackgroundColor='#c8c7c8'
+                                        ratingCount={5}
+                                        imageSize={11}
+                                        onFinishRating={ratingCompleted}
+                                        style={{ paddingVertical: 3 }}
+                                        startingValue={4}
+                                    />
+                                </Text>
+                                <Text style={styles.price}>
+                                    Book for {l.giaPhong}$
+                                </Text>
+                                <View style={styles.guest}>
+                                    <Icon name="users" style={styles.icon} />
+                                    <Text style={styles.textGuest} >
+                                        {l.loaiPhong.maLoaiPhong == 1 ? '2-4 Customers' : ''}
+                                        {l.loaiPhong.maLoaiPhong == 2 ? '2 Customers' : ''}
+                                        {l.loaiPhong.maLoaiPhong == 3 ? '2-8 Customers' : ''}
+                                    </Text>
+                                    <Icon name="bed" style={styles.icon} />
+                                    <Text style={styles.textGuest} >
+                                        {l.loaiPhong.maLoaiPhong == 1 ? '4 sqft' : ''}
+                                        {l.loaiPhong.maLoaiPhong == 2 ? '2 sqft' : ''}
+                                        {l.loaiPhong.maLoaiPhong == 3 ? '8 sqft' : ''}
+                                    </Text>
+                                </View>
+                                <Text style={styles.desc}>{l.tienNghi}</Text>
+                                <View style={styles.footerRoom}>
+                                    <Icon name="users" style={styles.iconFooter} />
+                                    <Text style={styles.lineBorder}></Text>
+                                    <Icon name="bed" style={styles.iconFooter} />
+                                    <Text style={styles.lineBorder}></Text>
+                                    <IconF name="bathtub" style={styles.iconFooter} />
+                                    <Text style={styles.lineBorder}></Text>
+                                    <Icon name="motorcycle" style={styles.iconFooter} />
+                                </View>
+                            </View>
+                        </View>
+                    ))
+                    : ''}
+
                 <View style={styles.booking}>
                     <Text style={styles.bookTitle}>Book Now</Text>
                     <View style={styles.formSearch}>
@@ -128,7 +151,8 @@ export default function RoomScreen() {
                             <View style={styles.inputView}>
                                 <TextInput
                                     style={styles.TextInput}
-                                    placeholder="444"
+                                    value={room}
+                                    placeholder="Room ID"
                                     onChangeText={(room) => setRoom(room)}
                                 />
                             </View>
@@ -140,6 +164,7 @@ export default function RoomScreen() {
                             <View style={styles.inputView}>
                                 <TextInput
                                     style={styles.TextInput}
+                                    value={price}
                                     placeholder="Price ($)"
                                     onChangeText={(price) => setPrice(price)}
                                 />
@@ -148,14 +173,12 @@ export default function RoomScreen() {
                         <View style={{ width: "4%" }}></View>
                         <View style={styles.formControll}>
                             <Text style={styles.label}>Room Type</Text>
-                            <View style={styles.inputViewSelect}>
-                                <RNPickerSelect
-                                    onValueChange={(value) => console.log(value)}
-                                    items={[
-                                        { label: 'Football', value: 'football' },
-                                        { label: 'Baseball', value: 'baseball' },
-                                        { label: 'Hockey', value: 'hockey' },
-                                    ]}
+                            <View style={styles.inputView}>
+                                <TextInput
+                                    style={styles.TextInput}
+                                    value={type}
+                                    placeholder="Type"
+                                    onChangeText={(type) => setType(type)}
                                 />
                             </View>
                         </View>
@@ -295,10 +318,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         textAlign: "center",
+        position: "relative"
     },
     titleRight: {
-        left: 100,
-        fontSize: 20
+        right: 20,
+        fontSize: 20,
+        position: "absolute"
     },
     title: {
         fontSize: 20,
@@ -340,6 +365,7 @@ const styles = StyleSheet.create({
         width: "23%",
         alignItems: "center",
         textAlign: "center",
+        fontSize: 15
     },
     lineBorder: {
         width: 2,

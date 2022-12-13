@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -17,56 +17,37 @@ import {
 } from '@rneui/themed';
 import { Rating } from 'react-native-ratings';
 import { Button } from "@rneui/base";
-import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 import { useNavigation } from '@react-navigation/native';
 import Footer from "../Layout/Footer";
+import { searchRoom, roomDefault } from '../../repositories/RoomRepository';
+import { BASEAPI } from '@env';
 
-
-const room = [
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 1
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 4
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 5
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 2.8
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 3.4
-    },
-]
 export default function RoomScreen() {
-    const [checkout, setCheckOut] = useState('01-01-2000');
-    const [checkin, setCheckIn] = useState('01-01-2000');
-    const [price, setPrice] = useState('');
-    const [type, setType] = useState('');
+    const [checkin, setCheckIn] = useState('2022-12-20');
+    const [checkout, setCheckOut] = useState('2022-12-21');
+    const [price, setPrice] = useState(500);
+    const [type, setType] = useState('VIP');
+    const [rooms, setRoom] = useState(null);
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
     };
+    useEffect(() => {
+        listRoomDefault()
+    }, [])
+    const btnSearch = async () => {
+        var data = {
+            checkin: checkin,
+            checkout: checkout,
+            maxPrice: price,
+            typeRoom: type
+        }
+        var datarearch = await searchRoom(data);
+        setRoom(datarearch)
+    }
+    const listRoomDefault = async () => {
+        var data = await roomDefault();
+        setRoom(data)
+    }
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
@@ -163,11 +144,11 @@ export default function RoomScreen() {
                         <Text style={styles.label}>Type Room</Text>
                         <View style={styles.inputViewSelect}>
                             <RNPickerSelect
-                                onValueChange={(value) => console.log(value)}
+                                onValueChange={(value) => setType(value)}
                                 items={[
-                                    { label: 'Football', value: 'football' },
-                                    { label: 'Baseball', value: 'baseball' },
-                                    { label: 'Hockey', value: 'hockey' },
+                                    { label: 'Room Normal', value: 'Normal' },
+                                    { label: 'Room VIP', value: 'VIP' },
+                                    { label: 'Homestay', value: 'Homestay' },
                                 ]}
                             />
                         </View>
@@ -206,19 +187,31 @@ export default function RoomScreen() {
                                 color: 'white',
                                 marginHorizontal: 2,
                             }}
+                            onPress={btnSearch}
                         />
                     </View>
                 </View>
                 <View style={styles.result}>
-                    <View style={styles.listRoom}>
+                    {rooms ? <View style={styles.listRoom}>
                         <View style={{ paddingVertical: 5 }}>
-                            {room.map((l, i) => (
+                            {rooms.map((l, i) => (
                                 <ListItem key={i} bottomDivider onPress={() => {
-                                    navigation.navigate(SCREEN_NAMES.RoomDetail)
+                                    navigation.navigate({
+                                        name: 'RoomDetail',
+                                        params: {
+                                            roomId: l.maPhong,
+                                            type: l.loaiPhong.tenLoaiPhong,
+                                            roomNumber: l.soPhong,
+                                            price: l.giaPhong
+                                        },
+                                    })
                                 }}>
-                                    <Avatar title={l.title} source={{ uri: l.image }} style={styles.imageRoom} />
+                                    <Avatar source={{ uri: BASEAPI + l.hinhAnh }} style={styles.imageRoom} />
                                     <ListItem.Content>
-                                        <ListItem.Title style={styles.nameRoom}>{l.title}</ListItem.Title>
+                                        <View style={{ position: "relative", width: "100%", }}>
+                                            <ListItem.Title style={styles.nameRoom}>Room {l.loaiPhong.tenLoaiPhong}</ListItem.Title>
+                                            <Text style={{ fontSize: 18, position: "absolute", right: 0 }}>ID: {l.soPhong}</Text>
+                                        </View>
                                         <Rating
                                             type='custom'
                                             ratingColor='gold'
@@ -230,15 +223,16 @@ export default function RoomScreen() {
                                             startingValue={l.rating}
                                         />
                                         <Text style={styles.price}>
-                                            Book for {l.price}$
+                                            Book for {l.giaPhong}$
                                         </Text>
-                                        <ListItem.Subtitle style={{ fontSize: 13 }}>{l.desc}</ListItem.Subtitle>
+                                        <ListItem.Subtitle style={{ fontSize: 13 }}>{l.tienNghi}</ListItem.Subtitle>
                                     </ListItem.Content>
                                     <ListItem.Chevron />
                                 </ListItem>
                             ))}
                         </View>
                     </View>
+                        : ''}
                 </View>
                 <Footer />
             </ScrollView>

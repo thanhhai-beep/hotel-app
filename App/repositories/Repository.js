@@ -10,7 +10,7 @@ export const CONTENT_TYPE = {
     'Content-Type': "multipart/form-data"
 };
 
-export const baseUrl = `/api${BASEAPI}`;
+export const baseUrl = `${BASEAPI}`;
 
 export const client = (token) => {
     return axios.create({
