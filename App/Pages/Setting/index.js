@@ -33,13 +33,13 @@ export default function AccountScreen() {
         setModal(!modal);
     };
     async function checkLogin() {
-        var checkStatus = await AsyncStorage.getItem('loginStatus');
+        var checkStatus = await AsyncStorage.getItem('loginStatus')
         if (checkStatus != 1) {
             check()
         }
     }
     function login() {
-        check()
+        setModal(false)
         navigation.navigate(SCREEN_NAMES.Login)
     }
     const checkOut = () => {
@@ -51,8 +51,9 @@ export default function AccountScreen() {
         await AsyncStorage.removeItem('email')
         await AsyncStorage.removeItem('birthday')
         await AsyncStorage.removeItem('phone')
-        await AsyncStorage.removeItem('loginStatus', "1")
-        checkLogin()
+        await AsyncStorage.removeItem('loginStatus')
+        setLogoutModal(false)
+        navigation.navigate(SCREEN_NAMES.Login)
     }
     return (
         <>

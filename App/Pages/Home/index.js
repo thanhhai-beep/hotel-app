@@ -7,7 +7,8 @@ import {
     TextInput,
     ScrollView,
     Image,
-    ImageBackground, TouchableOpacity
+    ImageBackground, TouchableOpacity,
+    RefreshControl
 } from "react-native";
 import {
     ListItem,
@@ -64,6 +65,10 @@ const room = [
         rating: 3.4
     },
 ]
+
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 export default function HomeScreen() {
     const navigation = useNavigation();
     const [maphong, setMaphong] = useState("");
@@ -76,10 +81,21 @@ export default function HomeScreen() {
         dispatch(increment());
     };
     const image = { uri: `${BASEAPI}/images/bg.jpg` };
+
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
     return (
         <View style={styles.container}>
             <Header />
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={styles.scrollView} refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
                 <View style={styles.search}>
                     <Icon name="search" style={styles.iconSearch}>
                     </Icon>

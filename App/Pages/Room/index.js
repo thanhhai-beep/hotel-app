@@ -6,14 +6,15 @@ import {
     View,
     ScrollView,
     TextInput,
-    Image
+    Image,
+    ActivityIndicator,
+    RefreshControl
 } from "react-native";
 import Header from "../Layout/Header";
 import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import {
     ListItem,
-    Avatar,
 } from '@rneui/themed';
 import { Rating } from 'react-native-ratings';
 import { Button } from "@rneui/base";
@@ -22,12 +23,18 @@ import Footer from "../Layout/Footer";
 import { searchRoom, roomDefault } from '../../repositories/RoomRepository';
 import { BASEAPI } from '@env';
 
+
+
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 export default function RoomScreen() {
     const [checkin, setCheckIn] = useState('2022-12-20');
     const [checkout, setCheckOut] = useState('2022-12-21');
     const [price, setPrice] = useState(500);
     const [type, setType] = useState('VIP');
     const [rooms, setRoom] = useState(null);
+    const [refreshing, setRefreshing] = React.useState(false);
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
     };
@@ -49,10 +56,21 @@ export default function RoomScreen() {
         setRoom(data)
     }
     const navigation = useNavigation();
+
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        await listRoomDefault()
+        wait(500).then(() => setRefreshing(false));
+    }, []);
     return (
         <View style={styles.container}>
             <Header />
-            <ScrollView style={styles.checkRoom}>
+            <ScrollView style={styles.checkRoom} refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
                 <Text style={styles.title}>Check Available Room</Text>
                 <View style={styles.formSearch}>
                     <View style={styles.formControll}>
@@ -62,9 +80,9 @@ export default function RoomScreen() {
                                 date={checkin}
                                 mode="date"
                                 placeholder="select date"
-                                format="DD/MM/YYYY"
-                                minDate="01-01-1900"
-                                maxDate="01-01-2004"
+                                format="YYYY/MM/DD"
+                                minDate="1900-01-01"
+                                maxDate="2004-01-01"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 customStyles={{
@@ -104,9 +122,9 @@ export default function RoomScreen() {
                                 date={checkout}
                                 mode="date"
                                 placeholder="select date"
-                                format="DD/MM/YYYY"
-                                minDate="01-01-1900"
-                                maxDate="01-01-2004"
+                                format="YYYY/MM/DD"
+                                minDate="1900-01-01"
+                                maxDate="2004-01-01"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 customStyles={{
@@ -206,7 +224,7 @@ export default function RoomScreen() {
                                         },
                                     })
                                 }}>
-                                    <Avatar source={{ uri: BASEAPI + l.hinhAnh }} style={styles.imageRoom} />
+                                    <Image source={{ uri: `${BASEAPI + l.hinhAnh.trim()}` }} style={styles.imageRoom} />
                                     <ListItem.Content>
                                         <View style={{ position: "relative", width: "100%", }}>
                                             <ListItem.Title style={styles.nameRoom}>Room {l.loaiPhong.tenLoaiPhong}</ListItem.Title>
@@ -232,7 +250,8 @@ export default function RoomScreen() {
                             ))}
                         </View>
                     </View>
-                        : ''}
+                        :
+                        <ActivityIndicator style={styles.loading} size="large" color="#f57b51" />}
                 </View>
                 <Footer />
             </ScrollView>
@@ -305,7 +324,8 @@ const styles = StyleSheet.create({
     },
     imageRoom: {
         width: 100,
-        height: 100
+        height: 100,
+        backgroundColor: "#eee"
     },
     price: {
         color: "#f57b51",
@@ -316,4 +336,10 @@ const styles = StyleSheet.create({
         fontStyle: "italic",
         color: "#625d5d"
     },
+    loading: {
+        backgroundColor: "#fff",
+        paddingTop: 55,
+        marginTop: 15,
+        paddingBottom: 100
+    }
 });

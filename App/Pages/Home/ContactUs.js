@@ -53,7 +53,7 @@ export default function ContactScreen() {
                     <IconI name="mail" style={styles.icon} />
                     <View style={styles.tel}>
                         <Text style={{ fontSize: 20, fontWeight: "500" }}>Email Us</Text>
-                        <Text onPress={() => Linking.openURL('mailto:support@example.com?subject=SendMail&body=Description')} style={{ fontSize: 16, color: "#888888" }}>hotel@fpt.edu.vn</Text>
+                        <Text onPress={() => Linking.openURL('mailto:BambuuHotel@fpt.edu.vn?subject=SendMail&body=Description')} style={{ fontSize: 16, color: "#888888" }}>hotel@fpt.edu.vn</Text>
                     </View>
                 </View>
                 <View style={styles.contactFooter}>

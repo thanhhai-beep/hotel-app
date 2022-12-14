@@ -6,6 +6,7 @@ import {
     View,
     ScrollView,
     TextInput,
+    RefreshControl
 } from "react-native";
 import Footer from "../Layout/Footer";
 import { Rating } from 'react-native-ratings';
@@ -17,6 +18,9 @@ import { ImageSlider } from "react-native-image-slider-banner";
 import { getRoomDetail } from '../../repositories/RoomRepository';
 import { BASEAPI } from '@env';
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 export default function RoomDetailScreen(props) {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -33,22 +37,36 @@ export default function RoomDetailScreen(props) {
     }
     useEffect(() => {
         roomDetail()
-    }, [])
+    }, [props.route.params])
     const roomDetail = async () => {
+        setRoom(props.route.params.roomNumbe)
+        setPrice(props.route.params.price)
+        setType(props.route.params.type)
         var data = await getRoomDetail(roomId)
         setRoomResult(data)
     }
+
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
     return (
         <View style={styles.container}>
             <Header />
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={styles.scrollView} refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
                 {roomResult ?
                     roomResult.map((l, i) => (
                         <View >
                             <View style={styles.room}>
                                 <ImageSlider
                                     data={[
-                                        { img: `${BASEAPI}${l.hinhAnh}` },
+                                        { img: `${BASEAPI}${l.hinhAnh.trim()}` },
                                     ]}
                                     autoPlay={false}
                                     onItemChanged={(item) => console.log("item", item)}

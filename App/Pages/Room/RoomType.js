@@ -13,6 +13,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function RoomTypeScreen(props) {
     const [type, setType] = useState(props.route.params.type);
+    useEffect(() => {
+        setType(props.route.params.type)
+    }, [props.route.params])
     return (
         <View style={styles.container}>
             <Header />
