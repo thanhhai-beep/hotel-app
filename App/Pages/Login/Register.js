@@ -12,6 +12,7 @@ import {
 import DatePicker from 'react-native-datepicker';
 import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 import RNPickerSelect from 'react-native-picker-select';
+import { Dialog } from '@rneui/themed';
 
 export default function RegisterScreen() {
     const [username, setUsername] = useState("");
@@ -21,6 +22,7 @@ export default function RegisterScreen() {
     const [birthday, setBirthday] = useState('01-01-2000');
     const [phone, setPhone] = useState("");
     const [gender, setGender] = useState("");
+    const [loading, setLoad] = useState(false);
     const navigation = useNavigation();
     const image = { uri: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp" };
 
@@ -36,6 +38,10 @@ export default function RegisterScreen() {
     const handleRegister = () => {
         console.log(data);
     }
+
+    const loadingPage = () => {
+        setLoad(!loading);
+    };
     return (
         <View style={styles.container}>
             <ImageBackground source={image} resizeMode="cover" style={styles.image}>
@@ -94,9 +100,9 @@ export default function RegisterScreen() {
                                 date={birthday}
                                 mode="date"
                                 placeholder="select date"
-                                format="DD/MM/YYYY"
-                                minDate="01-01-1900"
-                                maxDate="01-01-2004"
+                                format="YYYY-MM-DD"
+                                minDate="1950-01-01"
+                                maxDate="2004-01-01"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 customStyles={{
@@ -160,6 +166,9 @@ export default function RegisterScreen() {
                             <Text style={styles.loginText}>Register</Text>
                         </TouchableOpacity>
                     </View>
+                    <Dialog isVisible={loading} onBackdropPress={loadingPage}>
+                        <Dialog.Loading />
+                    </Dialog>
                 </ScrollView>
             </ImageBackground>
         </View>

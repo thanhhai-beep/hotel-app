@@ -5,21 +5,37 @@ import {
     View,
     ScrollView,
     StyleSheet,
-    Image
+    Image,
+    RefreshControl
 } from "react-native";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 export default function RoomTypeScreen(props) {
     const [type, setType] = useState(props.route.params.type);
     useEffect(() => {
         setType(props.route.params.type)
     }, [props.route.params])
+
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setType(props.route.params.type)
+        wait(500).then(() => setRefreshing(false));
+    }, []);
     return (
         <View style={styles.container}>
             <Header />
-            <ScrollView style={styles.checkRoom}>
+            <ScrollView style={styles.checkRoom} refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
                 <View style={styles.result}>
                     <View style={styles.roomItem}>
                         <View style={styles.roomImage}>

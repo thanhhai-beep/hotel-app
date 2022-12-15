@@ -48,6 +48,7 @@ export default function RoomScreen() {
             maxPrice: price,
             typeRoom: type
         }
+        console.log(data);
         var datarearch = await searchRoom(data);
         setRoom(datarearch)
     }
@@ -80,9 +81,9 @@ export default function RoomScreen() {
                                 date={checkin}
                                 mode="date"
                                 placeholder="select date"
-                                format="YYYY/MM/DD"
-                                minDate="1900-01-01"
-                                maxDate="2004-01-01"
+                                format="YYYY-MM-DD"
+                                minDate="2022-12-12"
+                                maxDate="2023-01-20"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 customStyles={{
@@ -122,9 +123,9 @@ export default function RoomScreen() {
                                 date={checkout}
                                 mode="date"
                                 placeholder="select date"
-                                format="YYYY/MM/DD"
-                                minDate="1900-01-01"
-                                maxDate="2004-01-01"
+                                format="YYYY-MM-DD"
+                                minDate="2022-12-12"
+                                maxDate="2023-01-20"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 customStyles={{

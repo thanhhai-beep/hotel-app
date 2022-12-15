@@ -20,7 +20,7 @@ export default function ProfileScreen() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [fullname, setFullname] = useState("");
-    const [birthday, setBirthday] = useState('01-01-2000');
+    const [birthday, setBirthday] = useState('2000-01-01');
     const [phone, setPhone] = useState("");
     const [gender, setGender] = useState("");
     const navigation = useNavigation();
@@ -83,9 +83,9 @@ export default function ProfileScreen() {
                             date={birthday}
                             mode="date"
                             placeholder="select date"
-                            format="DD/MM/YYYY"
-                            minDate="01-01-1900"
-                            maxDate="01-01-2004"
+                            format="YYYY-MM-DD"
+                            minDate="1950-01-01"
+                            maxDate="2004-01-01"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
                             customStyles={{

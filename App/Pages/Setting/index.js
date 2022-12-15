@@ -5,6 +5,7 @@ import {
     Text,
     View,
     ScrollView,
+    RefreshControl
 } from "react-native";
 import {
     Avatar,
@@ -15,6 +16,9 @@ import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 export default function AccountScreen() {
     const navigation = useNavigation();
     const [user, setUser] = useState("");
@@ -55,6 +59,14 @@ export default function AccountScreen() {
         setLogoutModal(false)
         navigation.navigate(SCREEN_NAMES.Login)
     }
+
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        await getData()
+        wait(500).then(() => setRefreshing(false));
+    }, []);
+
     return (
         <>
             {modal ? <View style={styles.container}>
@@ -70,7 +82,12 @@ export default function AccountScreen() {
                     </Dialog.Actions>
                 </Dialog>
             </View> : <View style={styles.container}>
-                <ScrollView style={styles.scrollView}>
+                <ScrollView style={styles.scrollView} refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }>
                     <View style={styles.accountTop}>
                         <Avatar
                             size={60}
@@ -97,6 +114,14 @@ export default function AccountScreen() {
                     }}>
                         <ListItem.Content>
                             <ListItem.Title>Booking history</ListItem.Title>
+                        </ListItem.Content>
+                        <ListItem.Chevron />
+                    </ListItem>
+                    <ListItem bottomDivider onPress={() => {
+                        navigation.navigate(SCREEN_NAMES.History)
+                    }}>
+                        <ListItem.Content>
+                            <ListItem.Title>Change Password</ListItem.Title>
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>

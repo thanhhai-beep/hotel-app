@@ -28,8 +28,8 @@ export default function RoomDetailScreen(props) {
     const [room, setRoom] = useState(props.route.params.roomNumber);
     const [price, setPrice] = useState(props.route.params.price);
     const [type, setType] = useState(props.route.params.type);
-    const [checkout, setCheckOut] = useState('01-01-2000');
-    const [checkin, setCheckIn] = useState('01-01-2000');
+    const [checkin, setCheckIn] = useState('2022-12-20');
+    const [checkout, setCheckOut] = useState('2022-12-21');
     const [roomResult, setRoomResult] = useState(null);
     let roomId = props.route.params.roomId;
     const ratingCompleted = (rating) => {
@@ -209,9 +209,9 @@ export default function RoomDetailScreen(props) {
                                     date={checkin}
                                     mode="date"
                                     placeholder="select date"
-                                    format="DD/MM/YYYY"
-                                    minDate="01-01-1900"
-                                    maxDate="01-01-2004"
+                                    format="YYYY-MM-DD"
+                                    minDate="2022-12-12"
+                                    maxDate="2023-01-20"
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     customStyles={{
@@ -251,9 +251,9 @@ export default function RoomDetailScreen(props) {
                                     date={checkout}
                                     mode="date"
                                     placeholder="select date"
-                                    format="DD/MM/YYYY"
-                                    minDate="01-01-1900"
-                                    maxDate="01-01-2004"
+                                    format="YYYY-MM-DD"
+                                    minDate="2022-12-12"
+                                    maxDate="2023-01-20"
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
                                     customStyles={{
