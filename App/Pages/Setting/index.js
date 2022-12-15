@@ -117,14 +117,6 @@ export default function AccountScreen() {
                         </ListItem.Content>
                         <ListItem.Chevron />
                     </ListItem>
-                    <ListItem bottomDivider onPress={() => {
-                        navigation.navigate(SCREEN_NAMES.History)
-                    }}>
-                        <ListItem.Content>
-                            <ListItem.Title>Change Password</ListItem.Title>
-                        </ListItem.Content>
-                        <ListItem.Chevron />
-                    </ListItem>
                     <ListItem bottomDivider onPress={checkOut}>
                         <ListItem.Content>
                             <ListItem.Title>Logout</ListItem.Title>

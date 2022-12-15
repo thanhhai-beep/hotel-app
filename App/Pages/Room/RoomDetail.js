@@ -25,9 +25,9 @@ export default function RoomDetailScreen(props) {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const [room, setRoom] = useState(props.route.params.roomNumber);
-    const [price, setPrice] = useState(props.route.params.price);
-    const [type, setType] = useState(props.route.params.type);
+    const [room, setRoom] = useState('');
+    const [price, setPrice] = useState('');
+    const [type, setType] = useState('');
     const [checkin, setCheckIn] = useState('2022-12-20');
     const [checkout, setCheckOut] = useState('2022-12-21');
     const [roomResult, setRoomResult] = useState(null);
@@ -37,11 +37,14 @@ export default function RoomDetailScreen(props) {
     }
     useEffect(() => {
         roomDetail()
+        // console.log(BASEAPI);
     }, [props.route.params])
     const roomDetail = async () => {
-        setRoom(props.route.params.roomNumbe)
+        setRoom(props.route.params.roomNumber)
         setPrice(props.route.params.price)
         setType(props.route.params.type)
+        setCheckIn(props.route.params.checkin)
+        setCheckOut(props.route.params.checkout)
         var data = await getRoomDetail(roomId)
         setRoomResult(data)
     }
@@ -167,12 +170,7 @@ export default function RoomDetailScreen(props) {
                         <View style={styles.formControll}>
                             <Text style={styles.label}>Room Number</Text>
                             <View style={styles.inputView}>
-                                <TextInput
-                                    style={styles.TextInput}
-                                    value={room}
-                                    placeholder="Room ID"
-                                    onChangeText={(room) => setRoom(room)}
-                                />
+                                <Text style={styles.TextInput}>{room}</Text>
                             </View>
                         </View>
                     </View>
@@ -180,24 +178,14 @@ export default function RoomDetailScreen(props) {
                         <View style={styles.formControll}>
                             <Text style={styles.label}>Room Price</Text>
                             <View style={styles.inputView}>
-                                <TextInput
-                                    style={styles.TextInput}
-                                    value={price}
-                                    placeholder="Price ($)"
-                                    onChangeText={(price) => setPrice(price)}
-                                />
+                                <Text style={styles.TextInput}>{price}$</Text>
                             </View>
                         </View>
                         <View style={{ width: "4%" }}></View>
                         <View style={styles.formControll}>
                             <Text style={styles.label}>Room Type</Text>
                             <View style={styles.inputView}>
-                                <TextInput
-                                    style={styles.TextInput}
-                                    value={type}
-                                    placeholder="Type"
-                                    onChangeText={(type) => setType(type)}
-                                />
+                                <Text style={styles.TextInput}>{type}</Text>
                             </View>
                         </View>
                     </View>

@@ -22,14 +22,10 @@ export default function LoginScreen() {
         checkLogin()
     }, [])
     async function checkLogin() {
-        setLoad(true)
         var login = await AsyncStorage.getItem('loginStatus')
-        console.log(login);
         if (login) {
-            setLoad(false)
             navigation.navigate(SCREEN_NAMES.TabBar)
         }
-        setLoad(false)
     }
     const handleLogin = async () => {
         setLoad(true)

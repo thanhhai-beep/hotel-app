@@ -40,15 +40,15 @@ export default function RoomScreen() {
     };
     useEffect(() => {
         listRoomDefault()
+        // console.log(BASEAPI);
     }, [])
     const btnSearch = async () => {
         var data = {
             checkin: checkin,
             checkout: checkout,
             maxPrice: price,
-            typeRoom: type
+            typeRoom: type,
         }
-        console.log(data);
         var datarearch = await searchRoom(data);
         setRoom(datarearch)
     }
@@ -190,7 +190,6 @@ export default function RoomScreen() {
                             style={styles.btnSearch}
                             title="Check"
                             buttonStyle={{ backgroundColor: 'rgba(214, 61, 57, 1)' }}
-                            // icon={<Icon name="react" size={15} color="#0FF" />}
                             containerStyle={{
                                 height: 40,
                                 width: 130,
@@ -221,7 +220,9 @@ export default function RoomScreen() {
                                             roomId: l.maPhong,
                                             type: l.loaiPhong.tenLoaiPhong,
                                             roomNumber: l.soPhong,
-                                            price: l.giaPhong
+                                            price: l.giaPhong,
+                                            checkin: checkin,
+                                            checkout: checkout
                                         },
                                     })
                                 }}>

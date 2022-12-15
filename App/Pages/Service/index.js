@@ -13,7 +13,7 @@ import IconI from 'react-native-vector-icons/Ionicons';
 import { BASEAPI } from '@env';
 
 export default function ServiceScreen() {
-
+    // console.log(BASEAPI);
     return (
         <View style={styles.container}>
             <Header />

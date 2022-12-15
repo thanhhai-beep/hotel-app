@@ -20,9 +20,7 @@ import Header from "../Layout/Header";
 import { Button } from "@rneui/base";
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import Footer from "../Layout/Footer";
-import { useSelector, useDispatch } from 'react-redux';
 import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
-import { increment, decrement } from '../../Redux/Actions/action';
 import { BASEAPI } from '@env';
 
 const imageBg = require('../../../assets/bottom.jpeg');
@@ -75,12 +73,8 @@ export default function HomeScreen() {
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
     }
-    const dispatch = useDispatch();
-    const count = useSelector((store) => store.count.count);
-    const handleIncrement = () => {
-        dispatch(increment());
-    };
     const image = { uri: `${BASEAPI}/images/bg.jpg` };
+    // console.log(BASEAPI);
 
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(async () => {
