@@ -31,6 +31,12 @@ export default function RoomDetailScreen(props) {
     const [checkin, setCheckIn] = useState('2022-12-20');
     const [checkout, setCheckOut] = useState('2022-12-21');
     const [roomResult, setRoomResult] = useState(null);
+
+    const [valid1, setValid1] = useState(false)
+    const [valid2, setValid2] = useState(false)
+    const [valid3, setValid3] = useState(false)
+    const [valid4, setValid4] = useState(false)
+    const [valid5, setValid5] = useState(false)
     let roomId = props.route.params.roomId;
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
@@ -54,6 +60,50 @@ export default function RoomDetailScreen(props) {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
     }, []);
+    const booking = async () => {
+        let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (name == '' || phone == '' || email == '' || checkin == '' || checkout == '') {
+            if (name == '') {
+                setValid1(true)
+            } else { setValid1(false) }
+            if (phone == '') {
+                setValid2(true)
+            } else { setValid2(false) }
+            if (email == '') {
+                setValid3(true)
+            } else { setValid3(false) }
+            if (checkin == '') {
+                setValid4(true)
+            } else { setValid4(false) }
+            if (checkout == '') {
+                setValid5(true)
+            } else { setValid5(false) }
+            return
+        } else {
+            setValid1(false)
+            setValid2(false)
+            setValid3(false)
+            setValid4(false)
+            setValid5(false)
+        }
+        if (!regEmail.test(email)) {
+            setValid3(true)
+            return
+        } else {
+            setValid3(false)
+        }
+        var data = {
+            username: name,
+            phone: phone,
+            email: email,
+            room: room,
+            price: price,
+            type: type,
+            checkin: checkin,
+            checkout: checkout
+        }
+        console.log(data);
+    }
     return (
         <View style={styles.container}>
             <Header />
@@ -134,7 +184,7 @@ export default function RoomDetailScreen(props) {
                     <Text style={styles.bookTitle}>Book Now</Text>
                     <View style={styles.formSearch}>
                         <View style={styles.formControll}>
-                            <Text style={styles.label}>Name</Text>
+                            <Text style={styles.label}>Name <Text style={{ color: "#d63447" }}>*</Text></Text>
                             <View style={styles.inputView}>
                                 <TextInput
                                     style={styles.TextInput}
@@ -142,10 +192,11 @@ export default function RoomDetailScreen(props) {
                                     onChangeText={(name) => setName(name)}
                                 />
                             </View>
+                            {valid1 ? <Text style={styles.validate}>Please enter your Username</Text> : ''}
                         </View>
                         <View style={{ width: "4%" }}></View>
                         <View style={styles.formControll}>
-                            <Text style={styles.label}>Phone Number</Text>
+                            <Text style={styles.label}>Phone Number <Text style={{ color: "#d63447" }}>*</Text></Text>
                             <View style={styles.inputView}>
                                 <TextInput
                                     style={styles.TextInput}
@@ -153,11 +204,12 @@ export default function RoomDetailScreen(props) {
                                     onChangeText={(phone) => setPhone(phone)}
                                 />
                             </View>
+                            {valid2 ? <Text style={styles.validate}>Please enter your Phone</Text> : ''}
                         </View>
                     </View>
                     <View style={styles.formSearch}>
                         <View style={styles.formControll}>
-                            <Text style={styles.label}>Email</Text>
+                            <Text style={styles.label}>Email <Text style={{ color: "#d63447" }}>*</Text></Text>
                             <View style={styles.inputView}>
                                 <TextInput
                                     style={styles.TextInput}
@@ -165,6 +217,7 @@ export default function RoomDetailScreen(props) {
                                     onChangeText={(email) => setEmail(email)}
                                 />
                             </View>
+                            {valid3 ? <Text style={styles.validate}>Please enter your Email</Text> : ''}
                         </View>
                         <View style={{ width: "4%" }}></View>
                         <View style={styles.formControll}>
@@ -191,7 +244,7 @@ export default function RoomDetailScreen(props) {
                     </View>
                     <View style={styles.formSearch}>
                         <View style={styles.formControll}>
-                            <Text style={styles.label}>Check-In Date</Text>
+                            <Text style={styles.label}>Check-In Date <Text style={{ color: "#d63447" }}>*</Text></Text>
                             <View style={styles.inputView}>
                                 <DatePicker
                                     date={checkin}
@@ -230,10 +283,11 @@ export default function RoomDetailScreen(props) {
                                     }}
                                 />
                             </View>
+                            {valid4 ? <Text style={styles.validate}>Please select a date Checkin</Text> : ''}
                         </View>
                         <View style={{ width: "4%" }}></View>
                         <View style={styles.formControll}>
-                            <Text style={styles.label}>Check-Out Date</Text>
+                            <Text style={styles.label}>Check-Out Date <Text style={{ color: "#d63447" }}>*</Text></Text>
                             <View style={styles.inputView}>
                                 <DatePicker
                                     date={checkout}
@@ -272,6 +326,7 @@ export default function RoomDetailScreen(props) {
                                     }}
                                 />
                             </View>
+                            {valid5 ? <Text style={styles.validate}>Please select a date Checkout</Text> : ''}
                         </View>
                     </View>
                     <View style={styles.formSearch}>
@@ -288,6 +343,7 @@ export default function RoomDetailScreen(props) {
                                 marginTop: 15,
                                 padding: 10,
                             }}
+                            onPress={() => booking()}
                         />
                     </View>
                     <Text style={{
@@ -392,18 +448,23 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     formControll: {
-        width: "48%"
+        width: "48%",
+        marginBottom: 15,
     },
     formControllButton: {
         width: "100%",
         position: "relative",
         height: 45,
     },
+    validate: {
+        fontSize: 12,
+        color: "#f57b51"
+    },
     inputView: {
         backgroundColor: "#fdfdfded",
         borderRadius: 5,
         height: 40,
-        marginBottom: 15,
+        marginBottom: 1,
         alignItems: "center",
         lineHeight: 84,
         width: "100%",

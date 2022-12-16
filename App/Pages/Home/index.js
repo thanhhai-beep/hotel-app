@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     Text,
@@ -74,7 +74,9 @@ export default function HomeScreen() {
         console.log("Rating is: " + rating)
     }
     const image = { uri: `${BASEAPI}/images/bg.jpg` };
-    // console.log(BASEAPI);
+    useEffect(() => {
+        // console.log(BASEAPI);
+    }, [BASEAPI])
 
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(async () => {

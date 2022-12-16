@@ -24,6 +24,14 @@ export default function RegisterScreen() {
     const [gender, setGender] = useState("");
     const [loading, setLoad] = useState(false);
     const navigation = useNavigation();
+
+    const [valid1, setValid1] = useState(false)
+    const [valid2, setValid2] = useState(false)
+    const [valid3, setValid3] = useState(false)
+    const [valid4, setValid4] = useState(false)
+    const [valid5, setValid5] = useState(false)
+    const [valid6, setValid6] = useState(false)
+    const [valid7, setValid7] = useState(false)
     const image = { uri: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp" };
 
     const data = {
@@ -36,6 +44,45 @@ export default function RegisterScreen() {
         birthday: birthday
     }
     const handleRegister = () => {
+        let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (username == '' || username == '' || email == '' || fullname == '' || phone == '' || gender == '' || birthday == '') {
+            if (username == '') {
+                setValid1(true)
+            } else { setValid1(false) }
+            if (username == '') {
+                setValid2(true)
+            } else { setValid2(false) }
+            if (email == '') {
+                setValid3(true)
+            } else { setValid3(false) }
+            if (fullname == '') {
+                setValid4(true)
+            } else { setValid4(false) }
+            if (phone == '') {
+                setValid5(true)
+            } else { setValid5(false) }
+            if (gender == '') {
+                setValid6(true)
+            } else { setValid4(false) }
+            if (birthday == '') {
+                setValid7(true)
+            } else { setValid5(false) }
+            return
+        } else {
+            setValid1(false)
+            setValid2(false)
+            setValid3(false)
+            setValid4(false)
+            setValid5(false)
+            setValid6(false)
+            setValid7(false)
+        }
+        if (!regEmail.test(email)) {
+            setValid3(true)
+            return
+        } else {
+            setValid3(false)
+        }
         console.log(data);
     }
 
@@ -48,7 +95,7 @@ export default function RegisterScreen() {
                 <ScrollView>
                     <Text style={styles.title}>REGISTER</Text>
                     <View style={styles.formGroup}>
-                        <Text style={styles.label}>Username:</Text>
+                        <Text style={styles.label}>Username: </Text>
                         <View style={styles.inputView}>
                             <TextInput
                                 style={styles.TextInput}
@@ -57,6 +104,7 @@ export default function RegisterScreen() {
                                 onChangeText={(username) => setUsername(username)}
                             />
                         </View>
+                        {valid1 ? <Text style={styles.validate}>Please enter your Username</Text> : ''}
                     </View>
                     <View style={styles.formGroup}>
                         <Text style={styles.label}>Password:</Text>
@@ -69,6 +117,7 @@ export default function RegisterScreen() {
                                 onChangeText={(password) => setPassword(password)}
                             />
                         </View>
+                        {valid2 ? <Text style={styles.validate}>Please enter your Password</Text> : ''}
                     </View>
                     <View style={styles.formGroup}>
                         <Text style={styles.label}>Email:</Text>
@@ -80,6 +129,7 @@ export default function RegisterScreen() {
                                 onChangeText={(email) => setEmail(email)}
                             />
                         </View>
+                        {valid3 ? <Text style={styles.validate}>Please enter your Email</Text> : ''}
                     </View>
                     <View style={styles.formGroup}>
                         <Text style={styles.label}>Full Name:</Text>
@@ -91,6 +141,7 @@ export default function RegisterScreen() {
                                 onChangeText={(fullname) => setFullname(fullname)}
                             />
                         </View>
+                        {valid4 ? <Text style={styles.validate}>Please enter your Full Name</Text> : ''}
                     </View>
                     <View style={styles.formGroup}>
                         <Text style={styles.label}>Birthday:</Text>
@@ -132,6 +183,7 @@ export default function RegisterScreen() {
                                 }}
                             />
                         </View>
+                        {valid5 ? <Text style={styles.validate}>Please enter your Birthday</Text> : ''}
                     </View>
                     <View style={styles.formGroup}>
                         <Text style={styles.label}>Phone:</Text>
@@ -143,6 +195,7 @@ export default function RegisterScreen() {
                                 onChangeText={(phone) => setPhone(phone)}
                             />
                         </View>
+                        {valid6 ? <Text style={styles.validate}>Please enter your Phone</Text> : ''}
                     </View>
                     <View style={styles.formGroup}>
                         <Text style={styles.label}>Gender:</Text>
@@ -155,6 +208,7 @@ export default function RegisterScreen() {
                                 ]}
                             />
                         </View>
+                        {valid7 ? <Text style={styles.validate}>Please enter your Gender</Text> : ''}
                     </View>
                     <View style={styles.formGroup}>
                         <TouchableOpacity style={styles.cancelBtn} onPress={() => {
@@ -197,9 +251,10 @@ const styles = StyleSheet.create({
     formGroup: {
         flexDirection: "row",
         flexWrap: "wrap",
+        marginBottom: 20
     },
     label: {
-        marginTop: 12,
+        marginTop: 9,
         marginLeft: 20,
         fontWeight: "600",
         width: "20%",
@@ -208,7 +263,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#fdfdfded",
         borderRadius: 8,
         height: 40,
-        marginBottom: 20,
         alignItems: "center",
         lineHeight: 84,
         marginLeft: 20,
@@ -225,6 +279,13 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         paddingTop: 10,
         paddingLeft: 100
+    },
+    validate: {
+        fontSize: 12,
+        color: "#f57b51",
+        width: "100%",
+        marginLeft: "33%",
+        marginTop: 2
     },
     TextInput: {
         height: 50,

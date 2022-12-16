@@ -16,6 +16,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function LoginScreen() {
     const [username, setUsername] = useState('admin');
     const [password, setPassword] = useState("12345678");
+    const [valid1, setValid1] = useState(false);
+    const [valid2, setValid2] = useState(false);
     const navigation = useNavigation();
     const [loading, setLoad] = useState(false);
     useEffect(() => {
@@ -28,6 +30,17 @@ export default function LoginScreen() {
         }
     }
     const handleLogin = async () => {
+        if (username == '' || password == '') {
+            if (username == '') {
+                setValid1(true)
+            } else { setValid1(false) }
+            if (password == '') {
+                setValid2(true)
+            } else { setValid2(false) }
+        } else {
+            setValid1(false)
+            setValid2(false)
+        }
         setLoad(true)
         const data = {
             username: username,
@@ -61,6 +74,7 @@ export default function LoginScreen() {
                     onChangeText={(username) => setUsername(username)}
                 />
             </View>
+            {valid1 ? <Text style={styles.validate}>Please enter your Username</Text> : ''}
             <View style={styles.inputView}>
                 <TextInput
                     style={styles.TextInput}
@@ -71,6 +85,7 @@ export default function LoginScreen() {
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
+            {valid2 ? <Text style={styles.validate}>Please enter your Password</Text> : ''}
             <TouchableOpacity>
                 <Text style={styles.forgot_button}>Forgot Password?</Text>
             </TouchableOpacity>
@@ -112,7 +127,8 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         width: "70%",
         height: 45,
-        marginBottom: 20,
+        marginBottom: 5,
+        marginTop: 10,
         alignItems: "center",
     },
     TextInput: {
@@ -123,6 +139,7 @@ const styles = StyleSheet.create({
     },
     forgot_button: {
         height: 30,
+        marginTop: 15,
         marginBottom: 30,
     },
     loginBtn: {
@@ -136,5 +153,10 @@ const styles = StyleSheet.create({
     },
     loginText: {
         color: "#53e3a6",
+    },
+    validate: {
+        fontSize: 12,
+        color: "red",
+        marginBottom: 16,
     },
 });

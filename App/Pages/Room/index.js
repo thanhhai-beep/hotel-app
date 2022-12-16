@@ -41,7 +41,7 @@ export default function RoomScreen() {
     useEffect(() => {
         listRoomDefault()
         // console.log(BASEAPI);
-    }, [])
+    }, [BASEAPI])
     const btnSearch = async () => {
         var data = {
             checkin: checkin,
