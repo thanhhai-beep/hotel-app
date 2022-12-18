@@ -1,6 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
     ScrollView,
     StyleSheet,
@@ -10,7 +8,6 @@ import {
 } from "react-native";
 import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
-import MapView from 'react-native-maps';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconI from 'react-native-vector-icons/Ionicons';
 import IconM from 'react-native-vector-icons/MaterialIcons';

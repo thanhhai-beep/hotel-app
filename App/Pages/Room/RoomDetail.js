@@ -40,6 +40,8 @@ export default function RoomDetailScreen(props) {
     var today = moment().format('YYYY-MM-DD');
     var lastday = moment().subtract(-20, 'days').format('YYYY-MM-DD');
     const [notify, setNotify] = useState(false);
+    const [notiClass, setNotiClass] = useState('Error');
+    const [load, setLoad] = useState(false);
 
     const [valid1, setValid1] = useState(false)
     const [valid2, setValid2] = useState(false)
@@ -78,12 +80,14 @@ export default function RoomDetailScreen(props) {
         wait(2000).then(() => setRefreshing(false));
     }, []);
     const sendBooking = async () => {
+        setLoad(true)
         var params = {
             checkin: checkin,
             checkout: checkout,
             roomNumber: props.route.params.roomNumber
         }
         var checkDate = await checkRoomNumber(params)
+        setLoad(false)
         if (checkDate) {
             setNotify(true)
             return
@@ -120,36 +124,42 @@ export default function RoomDetailScreen(props) {
         } else {
             setValid3(false)
         }
-        var data = {
-            user: "admin",
-            name: name,
-            phoneNumber: phone,
-            roomCode: room,
-            total: price,
-            checkin: checkin,
-            checkout: checkout
-        }
+
+        var data = new FormData();
+        data.append('user', user);
+        data.append('name', name);
+        data.append('phoneNumber', phone);
+        data.append('checkin', checkin);
+        data.append('checkout', checkout);
+        data.append('total', price);
+        data.append('roomCode', room);
         var book = await booking(data)
         if (book == 1) {
-            setError('Check-in date must greater than or equal today')
+            setNotiClass('Error')
+            setError('Check-in date must greater than or equal today.')
             setErrorNoti(true)
             return
         } else if (book == 2) {
+            setNotiClass('Error')
             setError("Check-in date can't greater than check - out date")
             setErrorNoti(true)
             return
         } else if (book == 3) {
+            setNotiClass('Error')
             setError("Cannot book more than 7 days")
             setErrorNoti(true)
             return
         } else if (book == 4) {
+            setNotiClass('Error')
             setError("This time have already booked by another! Please Choose other Checkin Checkout ^^")
             setErrorNoti(true)
             return
         } else if (book == 5) {
-            setError("")
-            setErrorNoti(false)
+            setNotiClass('Success')
+            setError("Successfull")
+            setErrorNoti(true)
         } else {
+            setNotiClass('Error')
             setError("Booking failed")
             setErrorNoti(true)
             return
@@ -157,6 +167,12 @@ export default function RoomDetailScreen(props) {
     }
     const toggleNotify = () => {
         setNotify(!notify)
+    }
+    const toggleNotiError = () => {
+        setErrorNoti(!errorNoti)
+    }
+    const tonggleLoad = () => {
+        setLoad(!load)
     }
     return (
         <View style={styles.container}>
@@ -314,7 +330,7 @@ export default function RoomDetailScreen(props) {
                                     mode="date"
                                     placeholder="select date"
                                     format="YYYY-MM-DD"
-                                    minDate="2022-12-12"
+                                    minDate={today}
                                     maxDate="2023-01-20"
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
@@ -357,7 +373,7 @@ export default function RoomDetailScreen(props) {
                                     mode="date"
                                     placeholder="select date"
                                     format="YYYY-MM-DD"
-                                    minDate="2022-12-12"
+                                    minDate={today}
                                     maxDate="2023-01-20"
                                     confirmBtnText="Confirm"
                                     cancelBtnText="Cancel"
@@ -426,6 +442,16 @@ export default function RoomDetailScreen(props) {
                     <Dialog.Actions>
                         <Dialog.Button title="CANCEL" onPress={toggleNotify} />
                     </Dialog.Actions>
+                </Dialog>
+                <Dialog
+                    isVisible={errorNoti}
+                    onBackdropPress={toggleNotiError}
+                >
+                    <Dialog.Title title={notiClass} />
+                    <Text style={notiClass == 'Error' ? styles.Error : styles.Success}>{error}</Text>
+                </Dialog>
+                <Dialog isVisible={load} onBackdropPress={tonggleLoad}>
+                    <Dialog.Loading />
                 </Dialog>
                 <Footer />
             </ScrollView>
@@ -570,5 +596,15 @@ const styles = StyleSheet.create({
     bookingDate: {
         marginTop: 15,
         marginBottom: 10
+    },
+    Error: {
+        fontSize: 15,
+        fontWeight: "500",
+        color: "red"
+    },
+    Success: {
+        fontSize: 15,
+        fontWeight: "500",
+        color: "#285430"
     }
 });

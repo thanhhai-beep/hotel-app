@@ -1,4 +1,4 @@
-import { client } from './Repository';
+import { client, clientFromdata } from './Repository';
 import { BASEAPI } from '@env';
 
 export async function searchRoom(params) {
@@ -62,7 +62,8 @@ export async function history(user) {
 
 export async function booking(params) {
     var endPoint = `${BASEAPI}/api/book/booking`;
-    const reponse = await client().post(endPoint, params)
+    console.log(endPoint);
+    const reponse = await clientFromdata().post(endPoint, params)
         .then(response => {
             return response.data;
         })

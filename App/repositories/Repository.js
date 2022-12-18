@@ -22,6 +22,16 @@ export const client = (token) => {
     });
 }
 
+export const clientFromdata = (token) => {
+    return axios.create({
+        baseURL: baseUrl,
+        headers: {
+            "content-type": "multipart/form-data",
+        },
+        timeout: 10000
+    });
+}
+
 export default axios.create({
     baseUrl,
     headers: CONTENT_TYPE,

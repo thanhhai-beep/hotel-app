@@ -18,7 +18,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Banner from '../../Components/Banner';
 import Header from "../Layout/Header";
 import { Button } from "@rneui/base";
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { Rating } from 'react-native-ratings';
 import Footer from "../Layout/Footer";
 import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 import { BASEAPI } from '@env';

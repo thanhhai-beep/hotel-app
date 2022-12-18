@@ -46,14 +46,10 @@ const TabBarConfigs = {
         icon: "home"
     },
     Service: {
-        // normal: images.home.icPondManage,
-        // hightlight: images.home.icHightlightPondManage,
         title: "Services",
         icon: "forward"
     },
     Account: {
-        // normal: images.home.icPondManage,
-        // hightlight: images.home.icHightlightPondManage,
         title: "Account",
         icon: "user-circle"
     },
