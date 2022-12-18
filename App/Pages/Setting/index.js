@@ -152,5 +152,7 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         marginBottom: 5
     },
-
+    scrollView: {
+        paddingBottom: 150
+    }
 });

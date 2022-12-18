@@ -12,16 +12,19 @@ import Footer from "../Layout/Footer";
 import { Rating } from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconF from 'react-native-vector-icons/FontAwesome';
-import { Button } from '@rneui/themed';
+import { Button, Dialog } from '@rneui/themed';
 import DatePicker from 'react-native-datepicker';
 import { ImageSlider } from "react-native-image-slider-banner";
-import { getRoomDetail } from '../../repositories/RoomRepository';
+import { getRoomDetail, checkRoomNumber, booking } from '../../repositories/RoomRepository';
 import { BASEAPI } from '@env';
+import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 export default function RoomDetailScreen(props) {
+    const [user, setUser] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
@@ -31,6 +34,12 @@ export default function RoomDetailScreen(props) {
     const [checkin, setCheckIn] = useState('2022-12-20');
     const [checkout, setCheckOut] = useState('2022-12-21');
     const [roomResult, setRoomResult] = useState(null);
+    const [checkRoomEmpty, setCheckRoomEmpty] = useState(null);
+    const [error, setError] = useState('');
+    const [errorNoti, setErrorNoti] = useState(false);
+    var today = moment().format('YYYY-MM-DD');
+    var lastday = moment().subtract(-20, 'days').format('YYYY-MM-DD');
+    const [notify, setNotify] = useState(false);
 
     const [valid1, setValid1] = useState(false)
     const [valid2, setValid2] = useState(false)
@@ -46,13 +55,21 @@ export default function RoomDetailScreen(props) {
         // console.log(BASEAPI);
     }, [props.route.params])
     const roomDetail = async () => {
+        var params = {
+            checkin: today,
+            checkout: lastday,
+            roomNumber: props.route.params.roomNumber
+        }
         setRoom(props.route.params.roomNumber)
         setPrice(props.route.params.price)
         setType(props.route.params.type)
         setCheckIn(props.route.params.checkin)
         setCheckOut(props.route.params.checkout)
         var data = await getRoomDetail(roomId)
+        var dataCheck = await checkRoomNumber(params)
+        setCheckRoomEmpty(dataCheck)
         setRoomResult(data)
+        setUser(await AsyncStorage.getItem('username'))
     }
 
     const [refreshing, setRefreshing] = React.useState(false);
@@ -60,7 +77,18 @@ export default function RoomDetailScreen(props) {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
     }, []);
-    const booking = async () => {
+    const sendBooking = async () => {
+        var params = {
+            checkin: checkin,
+            checkout: checkout,
+            roomNumber: props.route.params.roomNumber
+        }
+        var checkDate = await checkRoomNumber(params)
+        if (checkDate) {
+            setNotify(true)
+            return
+        }
+
         let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (name == '' || phone == '' || email == '' || checkin == '' || checkout == '') {
             if (name == '') {
@@ -93,16 +121,42 @@ export default function RoomDetailScreen(props) {
             setValid3(false)
         }
         var data = {
-            username: name,
-            phone: phone,
-            email: email,
-            room: room,
-            price: price,
-            type: type,
+            user: "admin",
+            name: name,
+            phoneNumber: phone,
+            roomCode: room,
+            total: price,
             checkin: checkin,
             checkout: checkout
         }
-        console.log(data);
+        var book = await booking(data)
+        if (book == 1) {
+            setError('Check-in date must greater than or equal today')
+            setErrorNoti(true)
+            return
+        } else if (book == 2) {
+            setError("Check-in date can't greater than check - out date")
+            setErrorNoti(true)
+            return
+        } else if (book == 3) {
+            setError("Cannot book more than 7 days")
+            setErrorNoti(true)
+            return
+        } else if (book == 4) {
+            setError("This time have already booked by another! Please Choose other Checkin Checkout ^^")
+            setErrorNoti(true)
+            return
+        } else if (book == 5) {
+            setError("")
+            setErrorNoti(false)
+        } else {
+            setError("Booking failed")
+            setErrorNoti(true)
+            return
+        }
+    }
+    const toggleNotify = () => {
+        setNotify(!notify)
     }
     return (
         <View style={styles.container}>
@@ -175,6 +229,15 @@ export default function RoomDetailScreen(props) {
                                     <Text style={styles.lineBorder}></Text>
                                     <Icon name="motorcycle" style={styles.iconFooter} />
                                 </View>
+                                <View style={styles.bookingDate}>
+                                    <Text style={{ fontSize: 16, fontWeight: "500", marginBottom: 5 }}>Booking schedule in the next 20 days <Text style={{ color: "red" }}>*</Text></Text>
+                                    {checkRoomEmpty ?
+                                        checkRoomEmpty.map((c, i) => (
+                                            <Text style={{ marginTop: 5 }}>{c.checkinDuKien + " -> " + c.checkoutDuKien}</Text>
+                                        ))
+                                        : <Text>The upcoming room has not been booked yet</Text>
+                                    }
+                                </View>
                             </View>
                         </View>
                     ))
@@ -184,7 +247,7 @@ export default function RoomDetailScreen(props) {
                     <Text style={styles.bookTitle}>Book Now</Text>
                     <View style={styles.formSearch}>
                         <View style={styles.formControll}>
-                            <Text style={styles.label}>Name <Text style={{ color: "#d63447" }}>*</Text></Text>
+                            <Text style={styles.label}>Full Name <Text style={{ color: "#d63447" }}>*</Text></Text>
                             <View style={styles.inputView}>
                                 <TextInput
                                     style={styles.TextInput}
@@ -343,7 +406,7 @@ export default function RoomDetailScreen(props) {
                                 marginTop: 15,
                                 padding: 10,
                             }}
-                            onPress={() => booking()}
+                            onPress={() => sendBooking()}
                         />
                     </View>
                     <Text style={{
@@ -354,6 +417,16 @@ export default function RoomDetailScreen(props) {
                         You are booking as a guest.
                     </Text>
                 </View>
+                <Dialog
+                    isVisible={notify}
+                    onBackdropPress={toggleNotify}
+                >
+                    <Dialog.Title title="Notification" />
+                    <Text>This date is already booked, please choose another date</Text>
+                    <Dialog.Actions>
+                        <Dialog.Button title="CANCEL" onPress={toggleNotify} />
+                    </Dialog.Actions>
+                </Dialog>
                 <Footer />
             </ScrollView>
         </View>
@@ -494,4 +567,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#dedede"
     },
+    bookingDate: {
+        marginTop: 15,
+        marginBottom: 10
+    }
 });

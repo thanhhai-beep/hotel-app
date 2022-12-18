@@ -14,6 +14,7 @@ export async function searchRoom(params) {
 }
 export async function roomDefault() {
     var endPoint = `${BASEAPI}/api/book/room`;
+    // console.log(endPoint);
     const reponse = await client().get(endPoint)
         .then(response => {
             return response.data;
@@ -26,6 +27,42 @@ export async function roomDefault() {
 export async function getRoomDetail(id) {
     var endPoint = `${BASEAPI}/api/book/room/${id}`;
     const reponse = await client().get(endPoint)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            return error.response?.data;
+        });
+    return reponse;
+}
+
+export async function checkRoomNumber(params) {
+    var endPoint = `${BASEAPI}/api/book/checkBooking?checkin=${params.checkin}&checkout=${params.checkout}&room=${params.roomNumber}`;
+    const reponse = await client().get(endPoint)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            return error.response?.data;
+        });
+    return reponse;
+}
+
+export async function history(user) {
+    var endPoint = `${BASEAPI}/api/book/booking-history?user=${user}`;
+    const reponse = await client().get(endPoint)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            return error.response?.data;
+        });
+    return reponse;
+}
+
+export async function booking(params) {
+    var endPoint = `${BASEAPI}/api/book/booking`;
+    const reponse = await client().post(endPoint, params)
         .then(response => {
             return response.data;
         })

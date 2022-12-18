@@ -1,60 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Layout/Header";
 import {
     StyleSheet,
     Text,
     View,
-    ScrollView
+    ScrollView,
+    RefreshControl
 } from "react-native";
 import { ListItem } from '@rneui/themed';
 import Footer from "../Layout/Footer";
+import { history } from '../../repositories/RoomRepository';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-const room = [
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 1
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 4
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 5
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 2.8
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 3.4
-    },
-]
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 export default function HistoryScreen() {
+    const [list, setList] = useState(null)
+    useEffect(() => {
+        getListHistory()
+    }, [])
+    const getListHistory = async () => {
+        var user = await AsyncStorage.getItem('username')
+        var data = await history(user)
+        // console.log(data);
+        setList(data)
+    }
 
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
     return (
         <View style={styles.container}><Header />
-            <ScrollView>
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
                 <Text style={styles.title}>Check-out history</Text>
                 <View style={styles.history}>
-                    <ScrollView horizontal>
+                    <ScrollView horizontal >
                         <View style={{ paddingVertical: 5 }}>
                             <ListItem bottomDivider>
                                 <ListItem.Content>
@@ -64,11 +53,11 @@ export default function HistoryScreen() {
                                             alignItems: "center",
                                             textAlign: "center",
                                         }}>STT</Text>
-                                        <Text style={styles.th}>Name</Text>
+                                        <Text style={styles.th}>FullName</Text>
                                         <Text style={styles.th}>Phone</Text>
                                         <Text style={styles.th}>Room ID</Text>
-                                        <Text style={styles.th}>Room Type</Text>
-                                        <Text style={styles.th}>deposit (10%)</Text>
+                                        {/* <Text style={styles.th}>Room Type</Text>
+                                        <Text style={styles.th}>deposit (10%)</Text> */}
                                         <Text style={styles.th}>Total</Text>
                                         <Text style={{
                                             width: 220,
@@ -78,7 +67,7 @@ export default function HistoryScreen() {
                                     </View>
                                 </ListItem.Content>
                             </ListItem>
-                            {room.map((l, i) => (
+                            {list ? list.map((l, i) => (
                                 <ListItem key={i} bottomDivider>
                                     <ListItem.Content>
                                         <View style={styles.table}>
@@ -87,21 +76,23 @@ export default function HistoryScreen() {
                                                 alignItems: "center",
                                                 textAlign: "center",
                                             }}>1</Text>
-                                            <Text style={styles.td}>Hai</Text>
-                                            <Text style={styles.td}>0837418189</Text>
-                                            <Text style={styles.td}>204</Text>
-                                            <Text style={styles.td}>Vip</Text>
-                                            <Text style={styles.td}>25$</Text>
-                                            <Text style={styles.td}>327$</Text>
+                                            <Text style={styles.td}>{l.hoTen}</Text>
+                                            <Text style={styles.td}>{l.sodt}</Text>
+                                            <Text style={styles.td}>{l.soPhong}</Text>
+                                            {/* <Text style={styles.td}>Vip</Text> */}
+                                            {/* <Text style={styles.td}>25$</Text> */}
+                                            <Text style={styles.td}>{l.tongTien}$</Text>
                                             <Text style={{
                                                 width: 220,
                                                 alignItems: "center",
                                                 textAlign: "center",
-                                            }}>10/10/2020 - 20/10/2020</Text>
+                                            }}>{l.checkinDuKien + " -> " + l.checkoutDuKien}</Text>
                                         </View>
                                     </ListItem.Content>
                                 </ListItem>
-                            ))}
+                            ))
+                                : ''
+                            }
                         </View>
                     </ScrollView>
                 </View>
@@ -128,12 +119,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     th: {
-        width: 100,
+        width: 130,
         alignItems: "center",
         textAlign: "center",
     },
     td: {
-        width: 100,
+        width: 130,
         alignItems: "center",
         textAlign: "center",
     }

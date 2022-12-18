@@ -6,18 +6,33 @@ import {
     View,
     Image,
     ScrollView,
+    RefreshControl
 } from "react-native";
 import Footer from '../Layout/Footer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconI from 'react-native-vector-icons/Ionicons';
 import { BASEAPI } from '@env';
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 export default function ServiceScreen() {
     // console.log(BASEAPI);
+
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        wait(1000).then(() => setRefreshing(false));
+    }, []);
     return (
         <View style={styles.container}>
             <Header />
-            <ScrollView >
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
                 <View style={styles.service}>
                     <Text style={styles.title}>Homie Hotel Services</Text>
                     <Text style={styles.desc}>Typically, the basic hotel services include reception guests, room service, food service, restaurants in the hotel and security. Other services offered to guests of the hotel, can be considered as bonuses. These are the laundry service, massage room, fitness gyms, conference rooms, lock boxes for valuable assets and many other things. These services can be included in the price of the room or paid separately.</Text>
