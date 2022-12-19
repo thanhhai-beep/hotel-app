@@ -62,8 +62,19 @@ export async function history(user) {
 
 export async function booking(params) {
     var endPoint = `${BASEAPI}/api/book/booking`;
-    console.log(endPoint);
     const reponse = await clientFromdata().post(endPoint, params)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            return error.response?.data;
+        });
+    return reponse;
+}
+
+export async function roomType(type) {
+    var endPoint = `${BASEAPI}/api/book/room-type?type=${type}`;
+    const reponse = await client().get(endPoint)
         .then(response => {
             return response.data;
         })

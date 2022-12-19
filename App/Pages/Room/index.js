@@ -22,6 +22,7 @@ import { useNavigation } from '@react-navigation/native';
 import Footer from "../Layout/Footer";
 import { searchRoom, roomDefault } from '../../repositories/RoomRepository';
 import { BASEAPI } from '@env';
+import moment from 'moment';
 
 
 
@@ -29,12 +30,15 @@ const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 export default function RoomScreen() {
-    const [checkin, setCheckIn] = useState('2022-12-20');
-    const [checkout, setCheckOut] = useState('2022-12-21');
+    const [checkin, setCheckIn] = useState(moment().format('YYYY-MM-DD'));
+    const [checkout, setCheckOut] = useState(moment().subtract(-20, 'days').format('YYYY-MM-DD'));
     const [price, setPrice] = useState(500);
     const [type, setType] = useState('VIP');
     const [rooms, setRoom] = useState(null);
     const [refreshing, setRefreshing] = React.useState(false);
+    var today = moment().format('YYYY-MM-DD');
+    var minDate = moment().subtract(-1, 'days').format('YYYY-MM-DD');
+    var maxDate = moment().subtract(-60, 'days').format('YYYY-MM-DD');
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
     };
@@ -53,6 +57,8 @@ export default function RoomScreen() {
         setRoom(datarearch)
     }
     const listRoomDefault = async () => {
+        setCheckIn(today)
+        setCheckOut(minDate)
         var data = await roomDefault();
         setRoom(data)
     }
@@ -82,8 +88,8 @@ export default function RoomScreen() {
                                 mode="date"
                                 placeholder="select date"
                                 format="YYYY-MM-DD"
-                                minDate="2022-12-12"
-                                maxDate="2023-01-20"
+                                minDate={today}
+                                maxDate={maxDate}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 customStyles={{
@@ -124,8 +130,8 @@ export default function RoomScreen() {
                                 mode="date"
                                 placeholder="select date"
                                 format="YYYY-MM-DD"
-                                minDate="2022-12-12"
-                                maxDate="2023-01-20"
+                                minDate={minDate}
+                                maxDate={maxDate}
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 customStyles={{

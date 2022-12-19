@@ -37,7 +37,7 @@ export default function Banner() {
                         Vip Room
                     </Text>
                     <Text style={styles.guest}>
-                        <Icon name="users" />  5 Guests
+                        <Icon name="users" />  2-4 Guests
                     </Text>
                 </ImageBackground>
             </TouchableOpacity>

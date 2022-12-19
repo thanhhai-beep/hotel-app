@@ -11,6 +11,7 @@ import Header from '../Layout/Header';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconI from 'react-native-vector-icons/Ionicons';
 import IconM from 'react-native-vector-icons/MaterialIcons';
+import { BASEAPI } from '@env';
 
 export default function AboutScreen() {
     return (
@@ -27,7 +28,7 @@ export default function AboutScreen() {
                     </Text>
                 </View>
                 <View style={styles.service}>
-                    <ImageBackground source={{ uri: "http://192.168.1.68:9596/images/slide1.jpg" }} resizeMode="cover" style={styles.image}>
+                    <ImageBackground source={{ uri: `${BASEAPI}/images/slide1.jpg` }} resizeMode="cover" style={styles.image}>
                         <Text style={{ color: "#fff", fontSize: 18, fontWeight: "500", paddingTop: 55 }}>Doing the right thing, at the right time</Text>
                         <View style={styles.conten}>
                             <View style={styles.item}>
