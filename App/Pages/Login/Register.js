@@ -7,13 +7,17 @@ import {
     TextInput,
     TouchableOpacity,
     ImageBackground,
-    ScrollView
+    ScrollView, RefreshControl
 } from "react-native";
 import DatePicker from 'react-native-datepicker';
 import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 import RNPickerSelect from 'react-native-picker-select';
 import { Dialog } from '@rneui/themed';
+import { register } from '../../repositories/SettingRepository';
 
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 export default function RegisterScreen() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -23,6 +27,8 @@ export default function RegisterScreen() {
     const [phone, setPhone] = useState("");
     const [gender, setGender] = useState("");
     const [loading, setLoad] = useState(false);
+    const [notify, setNotify] = useState(false)
+    const [notiText, setNotiText] = useState('')
     const navigation = useNavigation();
 
     const [valid1, setValid1] = useState(false)
@@ -38,18 +44,18 @@ export default function RegisterScreen() {
         username: username,
         password: password,
         email: email,
-        fullname: fullname,
-        phone: phone,
+        fullName: fullname,
+        phoneNumber: phone,
         gender: gender,
-        birthday: birthday
+        birth: birthday
     }
-    const handleRegister = () => {
+    const handleRegister = async () => {
         let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (username == '' || username == '' || email == '' || fullname == '' || phone == '' || gender == '' || birthday == '') {
+        if (username == '' || password == '' || email == '' || fullname == '' || phone == '' || gender == '' || birthday == '') {
             if (username == '') {
                 setValid1(true)
             } else { setValid1(false) }
-            if (username == '') {
+            if (password == '') {
                 setValid2(true)
             } else { setValid2(false) }
             if (email == '') {
@@ -83,16 +89,41 @@ export default function RegisterScreen() {
         } else {
             setValid3(false)
         }
-        console.log(data);
+        setLoad(true);
+        var send = await register(data)
+        setLoad(false)
+        if (send == 1) {
+            setNotify(true)
+            setNotiText("Username is already taken")
+        } else if (send == 2) {
+            setNotify(true)
+            setNotiText("Register Success")
+        } else {
+            setNotify(true)
+            setNotiText("Register failed")
+        }
     }
 
     const loadingPage = () => {
         setLoad(!loading);
     };
+    const loadingNoti = () => {
+        setNotify(!notify);
+    };
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
     return (
         <View style={styles.container}>
             <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-                <ScrollView>
+                <ScrollView refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }>
                     <Text style={styles.title}>REGISTER</Text>
                     <View style={styles.formGroup}>
                         <Text style={styles.label}>Username: </Text>
@@ -222,6 +253,9 @@ export default function RegisterScreen() {
                     </View>
                     <Dialog isVisible={loading} onBackdropPress={loadingPage}>
                         <Dialog.Loading />
+                    </Dialog>
+                    <Dialog isVisible={notify} onBackdropPress={loadingNoti}>
+                        <Dialog.Title title={notiText} />
                     </Dialog>
                 </ScrollView>
             </ImageBackground>

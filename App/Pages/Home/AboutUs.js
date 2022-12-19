@@ -53,20 +53,20 @@ export default function AboutScreen() {
                         <View style={styles.conten}>
                             <View style={styles.item}>
                                 <View style={styles.content}>
-                                    <IconI name='document-text' style={styles.icon} />
-                                    <Text style={{ fontSize: 16 }}>Welcome Drink</Text>
+                                    <IconI name='wifi' style={styles.icon} />
+                                    <Text style={{ fontSize: 16 }}>WIFI Areas</Text>
                                 </View>
                                 <Text style={{ color: "#888888", paddingLeft: 10, paddingTop: 5, fontSize: 12 }}>
-                                    The bar is in order to people can relax or work in the elegant atmosphere with harmonious music.
+                                    Full wifi coverage all over our hotel. Make sure a strong connection with customers.
                                 </Text>
                             </View>
                             <View style={styles.item}>
                                 <View style={styles.content}>
-                                    <Icon name='spa' style={styles.icon} />
-                                    <Text style={{ fontSize: 16 }}>Spa</Text>
+                                    <Icon name='trophy' style={styles.icon} />
+                                    <Text style={{ fontSize: 16 }}>GYM</Text>
                                 </View>
                                 <Text style={{ color: "#888888", paddingLeft: 10, paddingTop: 5, fontSize: 12 }}>
-                                    Our method offers a wide range of massage and beauty treatments to help you recover the balance of your body.
+                                    We provide quality and wellness care to customers with many gym equipments such as treadmill , bike and gym weights.
                                 </Text>
                             </View>
                         </View>

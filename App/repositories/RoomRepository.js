@@ -50,6 +50,7 @@ export async function checkRoomNumber(params) {
 
 export async function history(user) {
     var endPoint = `${BASEAPI}/api/book/booking-history?user=${user}`;
+    // console.log(endPoint);
     const reponse = await client().get(endPoint)
         .then(response => {
             return response.data;

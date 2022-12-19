@@ -19,6 +19,7 @@ const wait = (timeout) => {
 export default function HistoryScreen() {
     const [list, setList] = useState(null)
     useEffect(() => {
+        // console.log(11);
         getListHistory()
     }, [])
     const getListHistory = async () => {
@@ -31,6 +32,7 @@ export default function HistoryScreen() {
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(async () => {
         setRefreshing(true);
+        getListHistory()
         wait(2000).then(() => setRefreshing(false));
     }, []);
     return (

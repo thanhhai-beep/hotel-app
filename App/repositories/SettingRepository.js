@@ -1,4 +1,4 @@
-import { baseUrl, client } from './Repository';
+import { baseUrl, client, clientFromdata } from './Repository';
 import { BASEAPI } from '@env';
 
 export async function login(params) {
@@ -14,7 +14,8 @@ export async function login(params) {
 }
 export async function register(params) {
     var endPoint = `${BASEAPI}/api/user/register`;
-    const reponse = await client().post(endPoint, params)
+    // console.log(endPoint);
+    const reponse = await clientFromdata().post(endPoint, params)
         .then(response => {
             return response.data;
         })

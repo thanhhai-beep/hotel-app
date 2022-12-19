@@ -12,6 +12,7 @@ import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 import { login } from '../../repositories/SettingRepository';
 import { Dialog } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function LoginScreen() {
     const [username, setUsername] = useState('admin');
@@ -61,45 +62,56 @@ export default function LoginScreen() {
     const loadingPage = () => {
         setLoad(!loading);
     };
+    const back = () => {
+        console.log(111);
+        navigation.navigate(SCREEN_NAMES.Account)
+    }
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
-            <Text style={styles.title}>Bambuu Hotels</Text>
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    value={username}
-                    placeholder="Username"
-                    placeholderTextColor="#003f5c"
-                    onChangeText={(username) => setUsername(username)}
-                />
-            </View>
-            {valid1 ? <Text style={styles.validate}>Please enter your Username</Text> : ''}
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.TextInput}
-                    value={password}
-                    placeholder="Password"
-                    placeholderTextColor="#003f5c"
-                    secureTextEntry={true}
-                    onChangeText={(password) => setPassword(password)}
-                />
-            </View>
-            {valid2 ? <Text style={styles.validate}>Please enter your Password</Text> : ''}
-            <TouchableOpacity>
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.loginBtn}
-                onPress={handleLogin}
-            >
-                <Text style={styles.loginText}>LOGIN</Text>
-            </TouchableOpacity>
             <TouchableOpacity onPress={() => {
-                navigation.navigate(SCREEN_NAMES.Register)
-            }}>
-                <Text style={{ paddingTop: 15 }}>Register</Text>
+                navigation.navigate(SCREEN_NAMES.Account)
+            }} style={{ top: 40, left: 20, height: 60 }}>
+                <Text><Icon name='md-arrow-back-sharp' style={{ fontSize: 30 }} /></Text>
             </TouchableOpacity>
+            <View style={styles.containerItem}>
+                <Text style={styles.title}>Bambuu Hotels</Text>
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.TextInput}
+                        value={username}
+                        placeholder="Username"
+                        placeholderTextColor="#003f5c"
+                        onChangeText={(username) => setUsername(username)}
+                    />
+                </View>
+                {valid1 ? <Text style={styles.validate}>Please enter your Username</Text> : ''}
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.TextInput}
+                        value={password}
+                        placeholder="Password"
+                        placeholderTextColor="#003f5c"
+                        secureTextEntry={true}
+                        onChangeText={(password) => setPassword(password)}
+                    />
+                </View>
+                {valid2 ? <Text style={styles.validate}>Please enter your Password</Text> : ''}
+                <TouchableOpacity>
+                    <Text style={styles.forgot_button}>Forgot Password?</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.loginBtn}
+                    onPress={handleLogin}
+                >
+                    <Text style={styles.loginText}>LOGIN</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate(SCREEN_NAMES.Register)
+                }}>
+                    <Text style={{ paddingTop: 15 }}>Register</Text>
+                </TouchableOpacity>
+            </View>
             <Dialog isVisible={loading} onBackdropPress={loadingPage}>
                 <Dialog.Loading />
             </Dialog>
@@ -110,12 +122,14 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: "#50a3a2"
+    },
+    containerItem: {
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
+        height: "100%",
         overflow: "hidden",
-        backgroundColor: "#50a3a2",
     },
     title: {
         fontSize: 25,
@@ -159,4 +173,10 @@ const styles = StyleSheet.create({
         color: "red",
         marginBottom: 16,
     },
+    iconBack: {
+        bottom: 80,
+        right: 110,
+        width: 100,
+        height: 100,
+    }
 });
