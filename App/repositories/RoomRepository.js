@@ -13,7 +13,7 @@ export async function searchRoom(params) {
 }
 export async function roomDefault() {
     var endPoint = `${BASEAPI}/api/book/room`;
-    console.log(endPoint);
+    // console.log(endPoint);
     const reponse = await client().get(endPoint)
         .then(response => {
             return response.data;
@@ -25,7 +25,7 @@ export async function roomDefault() {
 }
 export async function getRoomDetail(id) {
     var endPoint = `${BASEAPI}/api/book/room/${id}`;
-    console.log(endPoint);
+    // console.log(endPoint);
     const reponse = await client().get(endPoint)
         .then(response => {
             return response.data;
@@ -38,7 +38,7 @@ export async function getRoomDetail(id) {
 
 export async function checkRoomNumber(params) {
     var endPoint = `${BASEAPI}/api/book/checkBooking?checkin=${params.checkin}&checkout=${params.checkout}&room=${params.roomNumber}`;
-    console.log(endPoint);
+    // console.log(endPoint);
     const reponse = await client().get(endPoint)
         .then(response => {
             return response.data;

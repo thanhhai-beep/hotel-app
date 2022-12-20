@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const BASEAPI = 'http://192.168.0.103:9596';
+export const BASEAPI = 'http://192.168.1.68:9596';
 
 export const customHeaders = {
     'Content-Type': 'application/json',

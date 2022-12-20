@@ -46,3 +46,15 @@ export async function profile(user) {
         });
     return reponse;
 }
+
+export async function feedback(params) {
+    var endPoint = `${BASEAPI}/api/user/feedback`;
+    const reponse = await clientFromdata().post(endPoint, params)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            return error.response?.data;
+        });
+    return reponse;
+}

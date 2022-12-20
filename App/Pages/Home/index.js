@@ -75,7 +75,7 @@ export default function HomeScreen() {
     }
     const image = { uri: `${BASEAPI}/images/bg.jpg` };
     useEffect(() => {
-        console.log(BASEAPI);
+        // console.log(BASEAPI);
     }, [BASEAPI])
 
     const [refreshing, setRefreshing] = React.useState(false);
@@ -92,14 +92,6 @@ export default function HomeScreen() {
                     onRefresh={onRefresh}
                 />
             }>
-                <View style={styles.search}>
-                    <Icon name="search" style={styles.iconSearch}>
-                    </Icon>
-                    <TextInput tyle={styles.searchText}
-                        placeholder="Room"
-                        placeholderTextColor="#003f5c"
-                        onChangeText={(maphong) => setMaphong(maphong)} />
-                </View>
                 <Banner />
                 <View style={styles.listRoom}>
                     <Text style={styles.roomTitle}>
@@ -217,25 +209,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         paddingBottom: 60
     },
-    search: {
-        position: "relative",
-        marginTop: 10,
-        height: 45,
-        backgroundColor: "#ededed",
-        borderRadius: 25,
-        marginBottom: 15,
-        alignItems: "center",
-        paddingTop: 12,
-        paddingRight: 10,
-        marginLeft: "10%",
-        marginRight: "10%"
-    },
-    iconSearch: {
-        fontSize: 20,
-        fontWeight: 100,
-        position: "absolute",
-        right: 18,
-        top: 12,
+    scrollView: {
+        paddingTop: 20
     },
     listRoom: {
         paddingTop: 20
