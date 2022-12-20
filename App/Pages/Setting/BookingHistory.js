@@ -77,7 +77,7 @@ export default function HistoryScreen() {
                                                 width: 50,
                                                 alignItems: "center",
                                                 textAlign: "center",
-                                            }}>1</Text>
+                                            }}>{i + 1}</Text>
                                             <Text style={styles.td}>{l.hoTen}</Text>
                                             <Text style={styles.td}>{l.sodt}</Text>
                                             <Text style={styles.td}>{l.soPhong}</Text>
