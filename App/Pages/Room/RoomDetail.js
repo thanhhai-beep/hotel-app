@@ -16,7 +16,7 @@ import { Button, Dialog } from '@rneui/themed';
 import DatePicker from 'react-native-datepicker';
 import { ImageSlider } from "react-native-image-slider-banner";
 import { getRoomDetail, checkRoomNumber, booking } from '../../repositories/RoomRepository';
-import { BASEAPI } from '@env';
+import { BASEAPI } from '../../repositories/Repository';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

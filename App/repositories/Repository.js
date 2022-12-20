@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { BASEAPI } from '@env';
+
+export const BASEAPI = 'http://192.168.1.68:9596';
 
 export const customHeaders = {
     'Content-Type': 'application/json',

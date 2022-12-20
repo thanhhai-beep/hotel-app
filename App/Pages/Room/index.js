@@ -21,7 +21,7 @@ import { Button } from "@rneui/base";
 import { useNavigation } from '@react-navigation/native';
 import Footer from "../Layout/Footer";
 import { searchRoom, roomDefault } from '../../repositories/RoomRepository';
-import { BASEAPI } from '@env';
+import { BASEAPI } from '../../repositories/Repository';
 import moment from 'moment';
 
 

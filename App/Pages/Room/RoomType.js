@@ -14,7 +14,7 @@ import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { roomType } from "../../repositories/RoomRepository";
-import { BASEAPI } from '@env';
+import { BASEAPI } from '../../repositories/Repository';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 

@@ -11,7 +11,7 @@ import {
 import Footer from '../Layout/Footer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconI from 'react-native-vector-icons/Ionicons';
-import { BASEAPI } from '@env';
+import { BASEAPI } from '../../repositories/Repository';
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));

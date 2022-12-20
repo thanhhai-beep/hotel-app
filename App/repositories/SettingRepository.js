@@ -1,5 +1,4 @@
-import { baseUrl, client, clientFromdata } from './Repository';
-import { BASEAPI } from '@env';
+import { client, clientFromdata, BASEAPI } from './Repository';
 
 export async function login(params) {
     var endPoint = `${BASEAPI}/api/user/login`;

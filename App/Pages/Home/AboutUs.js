@@ -11,7 +11,7 @@ import Header from '../Layout/Header';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconI from 'react-native-vector-icons/Ionicons';
 import IconM from 'react-native-vector-icons/MaterialIcons';
-import { BASEAPI } from '@env';
+import { BASEAPI } from '../../repositories/Repository';
 
 export default function AboutScreen() {
     return (

@@ -62,10 +62,6 @@ export default function LoginScreen() {
     const loadingPage = () => {
         setLoad(!loading);
     };
-    const back = () => {
-        console.log(111);
-        navigation.navigate(SCREEN_NAMES.Account)
-    }
     return (
         <View style={styles.container}>
             <StatusBar style="auto" />
