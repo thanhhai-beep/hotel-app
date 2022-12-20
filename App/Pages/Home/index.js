@@ -75,7 +75,7 @@ export default function HomeScreen() {
     }
     const image = { uri: `${BASEAPI}/images/bg.jpg` };
     useEffect(() => {
-        // console.log(BASEAPI);
+        console.log(BASEAPI);
     }, [BASEAPI])
 
     const [refreshing, setRefreshing] = React.useState(false);

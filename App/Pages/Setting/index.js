@@ -102,7 +102,12 @@ export default function AccountScreen() {
                         </Text>
                     </View>
                     <ListItem bottomDivider onPress={() => {
-                        navigation.navigate(SCREEN_NAMES.Profile)
+                        navigation.navigate({
+                            name: 'Profile',
+                            params: {
+                                user: user
+                            }
+                        })
                     }}>
                         <ListItem.Content>
                             <ListItem.Title>Profile</ListItem.Title>
