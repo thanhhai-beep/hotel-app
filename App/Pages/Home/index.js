@@ -22,65 +22,35 @@ import { Rating } from 'react-native-ratings';
 import Footer from "../Layout/Footer";
 import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 import { BASEAPI } from '../../repositories/Repository';
+import { getRoomHome } from '../../repositories/RoomRepository';
 
 const imageBg = require('../../../assets/bottom.jpeg');
 const imageTop = require('../../../assets/top.jpeg')
 
-const room = [
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 1
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 4
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 5
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 2.8
-    },
-    {
-        title: "Normal Room",
-        image: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp",
-        price: 328,
-        desc: "Fully furnished, luxurious furniture, service, room of 3-star standard or above.",
-        rating: 3.4
-    },
-]
 
 const wait = (timeout) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 }
 export default function HomeScreen() {
+    const [room, setRoom] = useState(null);
     const navigation = useNavigation();
-    const [maphong, setMaphong] = useState("");
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
     }
     const image = { uri: `${BASEAPI}/images/bg.jpg` };
     useEffect(() => {
         // console.log(BASEAPI);
+        getData()
     }, [BASEAPI])
 
+    const getData = async () => {
+        var data = await getRoomHome()
+        setRoom(data)
+    }
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(async () => {
         setRefreshing(true);
+        getData()
         wait(2000).then(() => setRefreshing(false));
     }, []);
     return (
@@ -95,28 +65,43 @@ export default function HomeScreen() {
                 <Banner />
                 <View style={styles.listRoom}>
                     <Text style={styles.roomTitle}>
-                        Fully furnished
+                        List of available rooms
                     </Text>
                     <View style={{ paddingVertical: 5 }}>
                         {room.map((l, i) => (
-                            <ListItem key={i} bottomDivider>
-                                <Avatar source={{ uri: l.image }} style={styles.imageRoom} />
+                            <ListItem key={i} bottomDivider onPress={() => {
+                                navigation.navigate({
+                                    name: 'RoomDetail',
+                                    params: {
+                                        roomId: l.maPhong,
+                                        type: l.loaiPhong.tenLoaiPhong,
+                                        roomNumber: l.soPhong,
+                                        price: l.giaPhong,
+                                        checkin: checkin,
+                                        checkout: checkout
+                                    },
+                                })
+                            }}>
+                                <Image source={{ uri: `${BASEAPI + l.hinhAnh.trim()}` }} style={styles.imageRoom} />
                                 <ListItem.Content>
-                                    <ListItem.Title style={styles.nameRoom}>{l.title}     ID: 102</ListItem.Title>
-                                    <Rating
-                                        type='custom'
-                                        ratingColor='gold'
-                                        ratingBackgroundColor='#c8c7c8'
-                                        ratingCount={5}
-                                        imageSize={11}
-                                        onFinishRating={ratingCompleted}
-                                        style={{ paddingVertical: 3 }}
-                                        startingValue={l.rating}
-                                    />
+                                    <View style={{ position: "relative", width: "100%", }}>
+                                        <ListItem.Title style={styles.nameRoom}>Room {l.loaiPhong.tenLoaiPhong}</ListItem.Title>
+                                        <Text style={{ fontSize: 18, position: "absolute", right: 0 }}>ID: {l.soPhong}</Text>
+                                    </View>
+                                    {/* <Rating
+                                            type='custom'
+                                            ratingColor='gold'
+                                            ratingBackgroundColor='#c8c7c8'
+                                            ratingCount={5}
+                                            imageSize={11}
+                                            onFinishRating={ratingCompleted}
+                                            style={{ paddingVertical: 3 }}
+                                            startingValue={l.rating}
+                                        /> */}
                                     <Text style={styles.price}>
-                                        Book for {l.price}$
+                                        Book for {l.giaPhong}$
                                     </Text>
-                                    <ListItem.Subtitle>{l.desc}</ListItem.Subtitle>
+                                    <ListItem.Subtitle style={{ fontSize: 13 }}>{l.tienNghi}</ListItem.Subtitle>
                                 </ListItem.Content>
                                 <ListItem.Chevron />
                             </ListItem>

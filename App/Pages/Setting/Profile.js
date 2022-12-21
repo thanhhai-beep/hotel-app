@@ -28,7 +28,7 @@ export default function ProfileScreen(props) {
     const [fullname, setFullname] = useState("");
     const [birthday, setBirthday] = useState('2000-01-01');
     const [phone, setPhone] = useState("");
-    const [gender, setGender] = useState("Famale");
+    const [gender, setGender] = useState("Female");
     const [loading, setLoad] = useState(false);
     const [noti, setNoti] = useState(false);
     const [notiErr, setNotiErr] = useState(false);
@@ -69,15 +69,15 @@ export default function ProfileScreen(props) {
         }
         var result = await updateProfile(data)
         if (result == 1) {
-            setLoad(false)
-            setNoti(true)
+            wait(300).then(() => setLoad(false))
+            wait(100).then(() => setNoti(true))
             getProfile()
-            setNoti(false)
+            wait(500).then(() => setNoti(false))
             return
         }
         setData()
-        setLoad(false)
-        setNotiErr(true);
+        wait(300).then(() => setLoad(false))
+        wait(100).then(() => setNotiErr(true));
         wait(1000).then(() => setNotiErr(false))
     }
 
@@ -196,7 +196,7 @@ export default function ProfileScreen(props) {
                         <RNPickerSelect
                             onValueChange={(value) => setGender(value)}
                             items={[
-                                { label: 'Famale', value: 'Famale' },
+                                { label: 'Female', value: 'Female' },
                                 { label: 'Male', value: 'Male' },
                             ]}
                         />

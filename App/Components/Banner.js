@@ -8,11 +8,11 @@ import {
     TouchableOpacity
 } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { BASEAPI } from "../repositories/Repository";
 
 
 export default function Banner() {
     const navigation = useNavigation();
-    const image = { uri: "https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp" };
     const type = (room) => {
         navigation.navigate({
             name: 'RoomTypeList',
@@ -22,7 +22,7 @@ export default function Banner() {
     return (
         <View style={styles.banner}>
             <TouchableOpacity style={styles.bannerItem} onPress={() => type("Normal")}>
-                <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+                <ImageBackground source={{ uri: `${BASEAPI}/images/room1.jpg` }} resizeMode="cover" style={styles.image}>
                     <Text style={styles.bannerTitle}>
                         Normal Room
                     </Text>
@@ -32,7 +32,7 @@ export default function Banner() {
                 </ImageBackground>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bannerItem} onPress={() => type("VIP")}>
-                <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+                <ImageBackground source={{ uri: `${BASEAPI}/images/about2.jpg` }} resizeMode="cover" style={styles.image}>
                     <Text style={styles.bannerTitle}>
                         Vip Room
                     </Text>

@@ -77,6 +77,10 @@ export default function RoomDetailScreen(props) {
     const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(async () => {
         setRefreshing(true);
+        setName('')
+        setPhone('')
+        setEmail('')
+        roomDetail()
         wait(2000).then(() => setRefreshing(false));
     }, []);
     const sendBooking = async () => {
@@ -206,7 +210,7 @@ export default function RoomDetailScreen(props) {
                                         ID:{l.soPhong}
                                     </Text>
                                 </View>
-                                <Text>
+                                {/* <Text>
                                     <Rating
                                         type='custom'
                                         ratingColor='gold'
@@ -217,7 +221,7 @@ export default function RoomDetailScreen(props) {
                                         style={{ paddingVertical: 3 }}
                                         startingValue={4}
                                     />
-                                </Text>
+                                </Text> */}
                                 <Text style={styles.price}>
                                     Book for {l.giaPhong}$
                                 </Text>

@@ -40,8 +40,6 @@ const Tab = createBottomTabNavigator();
 
 const TabBarConfigs = {
     Home: {
-        // normal: images.home.icPondManage,
-        // hightlight: images.home.icHightlightPondManage,
         title: "Home",
         icon: "home"
     },

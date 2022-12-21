@@ -85,3 +85,15 @@ export async function roomType(type) {
         });
     return reponse;
 }
+
+export async function getRoomHome() {
+    var endPoint = `${BASEAPI}/api/book/room-home`;
+    const reponse = await client().get(endPoint)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            return error.response?.data;
+        });
+    return reponse;
+}

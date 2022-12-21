@@ -93,14 +93,18 @@ export default function RegisterScreen() {
         var send = await register(data)
         setLoad(false)
         if (send == 1) {
-            setNotify(true)
+            wait(200).then(() => setNotify(true))
             setNotiText("Username is already taken")
+            wait(2000).then(() => setNotify(false))
         } else if (send == 2) {
-            setNotify(true)
+            wait(200).then(() => setNotify(true))
             setNotiText("Register Success")
+            wait(2000).then(() => setNotify(false))
+            navigation.navigate(SCREEN_NAMES.Login)
         } else {
-            setNotify(true)
+            wait(200).then(() => setNotify(true))
             setNotiText("Register failed")
+            wait(2000).then(() => setNotify(false))
         }
     }
 
@@ -234,7 +238,7 @@ export default function RegisterScreen() {
                             <RNPickerSelect
                                 onValueChange={(value) => setGender(value)}
                                 items={[
-                                    { label: 'Famale', value: 'Famale' },
+                                    { label: 'Female', value: 'Female' },
                                     { label: 'Male', value: 'Male' },
                                 ]}
                             />

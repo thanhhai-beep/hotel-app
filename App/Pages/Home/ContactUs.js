@@ -11,12 +11,12 @@ import {
 } from "react-native";
 import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
-import MapView from 'react-native-maps';
 import { Dialog } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconI from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { feedback } from "../../repositories/SettingRepository";
+import { WebView } from 'react-native-webview';
 
 
 const wait = (timeout) => {
@@ -124,14 +124,12 @@ export default function ContactScreen() {
                     </Text>
                 </View>
                 <View style={styles.maps}>
-                    <MapView style={{ width: "100%", height: "100%" }}
-                        initialRegion={{
-                            latitude: 37.78825,
-                            longitude: -122.4324,
-                            latitudeDelta: 0.0922,
-                            longitudeDelta: 0.0421,
-                        }}
-                    />
+                    <WebView
+                        originWhitelist={['*']}
+                        style={{ width: "100%", height: "100%" }}
+                        source={{
+                            html: `<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.32531626684!2d106.66410831465521!3d10.786376992314766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ed23c80767d%3A0x5a981a5efee9fd7d!2zNTkwIMSQLiBDw6FjaCBN4bqhbmcgVGjDoW5nIDgsIFBoxrDhu51uZyAxMSwgUXXhuq1uIDMsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1671583550520!5m2!1svi!2s" style="width:100%;height:100%;border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"/>`
+                        }} />
                 </View>
                 <View style={styles.contactFooter}>
                     <Icon name="phone-volume" style={styles.icon} />

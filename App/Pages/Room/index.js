@@ -238,7 +238,7 @@ export default function RoomScreen() {
                                             <ListItem.Title style={styles.nameRoom}>Room {l.loaiPhong.tenLoaiPhong}</ListItem.Title>
                                             <Text style={{ fontSize: 18, position: "absolute", right: 0 }}>ID: {l.soPhong}</Text>
                                         </View>
-                                        <Rating
+                                        {/* <Rating
                                             type='custom'
                                             ratingColor='gold'
                                             ratingBackgroundColor='#c8c7c8'
@@ -247,7 +247,7 @@ export default function RoomScreen() {
                                             onFinishRating={ratingCompleted}
                                             style={{ paddingVertical: 3 }}
                                             startingValue={l.rating}
-                                        />
+                                        /> */}
                                         <Text style={styles.price}>
                                             Book for {l.giaPhong}$
                                         </Text>
@@ -337,7 +337,9 @@ const styles = StyleSheet.create({
     },
     price: {
         color: "#f57b51",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginBottom: 5,
+        marginTop: 5
     },
     nameRoom: {
         fontSize: 18,
