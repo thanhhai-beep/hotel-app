@@ -23,6 +23,7 @@ import Footer from "../Layout/Footer";
 import { SCREEN_NAMES } from '../../Navigation/AppNavigation';
 import { BASEAPI } from '../../repositories/Repository';
 import { getRoomHome } from '../../repositories/RoomRepository';
+import moment from 'moment';
 
 const imageBg = require('../../../assets/bottom.jpeg');
 const imageTop = require('../../../assets/top.jpeg')
@@ -34,6 +35,8 @@ const wait = (timeout) => {
 export default function HomeScreen() {
     const [room, setRoom] = useState(null);
     const navigation = useNavigation();
+    var today = moment().format('YYYY-MM-DD');
+    var lastday = moment().subtract(-20, 'days').format('YYYY-MM-DD');
     const ratingCompleted = (rating) => {
         console.log("Rating is: " + rating)
     }
@@ -68,7 +71,7 @@ export default function HomeScreen() {
                         List of available rooms
                     </Text>
                     <View style={{ paddingVertical: 5 }}>
-                        {room.map((l, i) => (
+                        {room ? room.map((l, i) => (
                             <ListItem key={i} bottomDivider onPress={() => {
                                 navigation.navigate({
                                     name: 'RoomDetail',
@@ -77,8 +80,8 @@ export default function HomeScreen() {
                                         type: l.loaiPhong.tenLoaiPhong,
                                         roomNumber: l.soPhong,
                                         price: l.giaPhong,
-                                        checkin: checkin,
-                                        checkout: checkout
+                                        checkin: today,
+                                        checkout: lastday
                                     },
                                 })
                             }}>
@@ -105,7 +108,7 @@ export default function HomeScreen() {
                                 </ListItem.Content>
                                 <ListItem.Chevron />
                             </ListItem>
-                        ))}
+                        )) : ''}
                     </View>
                 </View>
                 <View style={styles.relax}>

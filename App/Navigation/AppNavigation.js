@@ -108,7 +108,7 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
 
 function TabBar() {
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#f57b51" }}>
             <Tab.Navigator initialRouteName={SCREEN_NAMES.Home} tabBar={props => <MyTabBar {...props} />} screenOptions={{ headerShown: false }}>
                 <Stack.Screen name={SCREEN_NAMES.Home} component={HomeScreen} />
                 <Stack.Screen name={SCREEN_NAMES.Service} component={ServicesScreen} />

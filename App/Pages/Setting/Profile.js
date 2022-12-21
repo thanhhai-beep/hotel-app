@@ -16,7 +16,6 @@ import Header from '../Layout/Header';
 import { Dialog } from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { updateProfile, profile } from '../../repositories/SettingRepository';
-import { FA5Style } from 'react-native-vector-icons/FontAwesome5';
 
 
 const wait = (timeout) => {
