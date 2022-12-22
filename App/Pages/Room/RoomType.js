@@ -28,12 +28,12 @@ export default function RoomTypeScreen(props) {
     var today = moment().format('YYYY-MM-DD');
     var lastday = moment().subtract(-20, 'days').format('YYYY-MM-DD');
     useEffect(() => {
+        setType(props.route.params.type)
         getData()
-    }, [props.route.params])
+    }, [props.route.params.type])
 
     const getData = async () => {
-        setType(props.route.params.type)
-        var data = await roomType(type)
+        var data = await roomType(props.route.params.type)
         setRoom(data)
     }
 

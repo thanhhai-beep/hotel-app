@@ -56,6 +56,7 @@ export default function AccountScreen() {
         await AsyncStorage.removeItem('birthday')
         await AsyncStorage.removeItem('phone')
         await AsyncStorage.removeItem('loginStatus')
+        await AsyncStorage.removeItem('gender')
         setLogoutModal(false)
         navigation.navigate(SCREEN_NAMES.Login)
     }

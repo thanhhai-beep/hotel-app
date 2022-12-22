@@ -23,6 +23,7 @@ import Footer from "../Layout/Footer";
 import { searchRoom, roomDefault } from '../../repositories/RoomRepository';
 import { BASEAPI } from '../../repositories/Repository';
 import moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 
 
@@ -32,7 +33,7 @@ const wait = (timeout) => {
 export default function RoomScreen() {
     const [checkin, setCheckIn] = useState(moment().format('YYYY-MM-DD'));
     const [checkout, setCheckOut] = useState(moment().subtract(-20, 'days').format('YYYY-MM-DD'));
-    const [price, setPrice] = useState(500);
+    const [price, setPrice] = useState(1500);
     const [type, setType] = useState('VIP');
     const [rooms, setRoom] = useState(null);
     const [refreshing, setRefreshing] = React.useState(false);
@@ -175,6 +176,7 @@ export default function RoomScreen() {
                                     { label: 'Room VIP', value: 'VIP' },
                                     { label: 'Homestay', value: 'Homestay' },
                                 ]}
+                                value={type}
                             />
                         </View>
                     </View>
@@ -183,10 +185,12 @@ export default function RoomScreen() {
                         <Text style={styles.label}>Price</Text>
                         <View style={styles.inputView}>
                             <TextInput
+                                value="800"
                                 style={styles.TextInput}
                                 placeholder="Price ($)"
                                 onChangeText={(price) => setPrice(price)}
                             />
+                            <Icon name="dollar-sign" style={styles.icon} />
                         </View>
                     </View>
                 </View>
@@ -351,5 +355,12 @@ const styles = StyleSheet.create({
         paddingTop: 55,
         marginTop: 15,
         paddingBottom: 100
+    },
+    icon: {
+        position: "absolute",
+        right: 10,
+        top: 11,
+        fontSize: 18,
+        color: "#888888"
     }
 });

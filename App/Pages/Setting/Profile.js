@@ -27,7 +27,7 @@ export default function ProfileScreen(props) {
     const [fullname, setFullname] = useState("");
     const [birthday, setBirthday] = useState('2000-01-01');
     const [phone, setPhone] = useState("");
-    const [gender, setGender] = useState("Female");
+    const [gender, setGender] = useState("");
     const [loading, setLoad] = useState(false);
     const [noti, setNoti] = useState(false);
     const [notiErr, setNotiErr] = useState(false);
@@ -41,6 +41,7 @@ export default function ProfileScreen(props) {
         setFullname(await AsyncStorage.getItem('name'))
         setBirthday(await AsyncStorage.getItem('birthday'))
         setPhone(await AsyncStorage.getItem('phone'))
+        setGender(await AsyncStorage.getItem('gender'))
     }
 
     const getProfile = async () => {
@@ -51,6 +52,7 @@ export default function ProfileScreen(props) {
             setFullname(await AsyncStorage.setItem('name', pro.hoTen))
             setBirthday(await AsyncStorage.setItem('birthday', pro.ngaySinh))
             setPhone(await AsyncStorage.setItem('phone', pro.soDT))
+            setGender(await AsyncStorage.setItem('gender'))
             setGender(pro.gioiTinh)
         }
         setData()
@@ -198,6 +200,7 @@ export default function ProfileScreen(props) {
                                 { label: 'Female', value: 'Female' },
                                 { label: 'Male', value: 'Male' },
                             ]}
+                            value={gender}
                         />
                     </View>
                 </View>

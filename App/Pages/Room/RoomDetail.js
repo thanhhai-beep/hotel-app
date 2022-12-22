@@ -128,7 +128,14 @@ export default function RoomDetailScreen(props) {
         } else {
             setValid3(false)
         }
-
+        if (checkin >= checkout) {
+            setNotiClass('Error')
+            setError('Check-out date must be greater than check-in date.')
+            setErrorNoti(true)
+            return
+        } else {
+            setErrorNoti(false)
+        }
         var data = new FormData();
         data.append('user', user);
         data.append('name', name);

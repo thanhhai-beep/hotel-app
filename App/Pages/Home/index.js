@@ -54,7 +54,7 @@ export default function HomeScreen() {
     const onRefresh = React.useCallback(async () => {
         setRefreshing(true);
         getData()
-        wait(2000).then(() => setRefreshing(false));
+        wait(1000).then(() => setRefreshing(false));
     }, []);
     return (
         <View style={styles.container}>
@@ -72,7 +72,7 @@ export default function HomeScreen() {
                     </Text>
                     <View style={{ paddingVertical: 5 }}>
                         {room ? room.map((l, i) => (
-                            <ListItem key={i} bottomDivider onPress={() => {
+                            <ListItem bottomDivider onPress={() => {
                                 navigation.navigate({
                                     name: 'RoomDetail',
                                     params: {

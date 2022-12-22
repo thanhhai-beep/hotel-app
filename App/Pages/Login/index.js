@@ -57,7 +57,9 @@ export default function LoginScreen() {
             await AsyncStorage.setItem('loginStatus', "1")
             setLoad(false)
             navigation.navigate(SCREEN_NAMES.TabBar)
+            return
         }
+        setLoad(false)
     }
     const loadingPage = () => {
         setLoad(!loading);
