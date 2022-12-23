@@ -200,7 +200,6 @@ export default function ProfileScreen(props) {
                                 { label: 'Female', value: 'Female' },
                                 { label: 'Male', value: 'Male' },
                             ]}
-                            value={gender}
                         />
                     </View>
                 </View>

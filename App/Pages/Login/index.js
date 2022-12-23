@@ -55,6 +55,7 @@ export default function LoginScreen() {
             await AsyncStorage.setItem('birthday', result.birthday)
             await AsyncStorage.setItem('phone', result.phoneNumber)
             await AsyncStorage.setItem('loginStatus', "1")
+            await AsyncStorage.setItem('gender', result.gender)
             setLoad(false)
             navigation.navigate(SCREEN_NAMES.TabBar)
             return

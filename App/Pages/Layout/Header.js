@@ -12,7 +12,7 @@ export default () => {
             backgroundImageStyle={{}}
             barStyle="default"
             centerComponent={{
-                text: "HOMIE HOTEL",
+                text: "BAMBUU HOTEL",
                 style: {
                     color: "#fff",
                     fontSize: 18

@@ -176,7 +176,6 @@ export default function RoomScreen() {
                                     { label: 'Room VIP', value: 'VIP' },
                                     { label: 'Homestay', value: 'Homestay' },
                                 ]}
-                                value={type}
                             />
                         </View>
                     </View>
@@ -185,7 +184,6 @@ export default function RoomScreen() {
                         <Text style={styles.label}>Price</Text>
                         <View style={styles.inputView}>
                             <TextInput
-                                value="800"
                                 style={styles.TextInput}
                                 placeholder="Price ($)"
                                 onChangeText={(price) => setPrice(price)}
