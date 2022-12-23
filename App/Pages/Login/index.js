@@ -15,8 +15,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function LoginScreen() {
-    const [username, setUsername] = useState('admin');
-    const [password, setPassword] = useState("12345678");
+    const [username, setUsername] = useState('thanhhai02');
+    const [password, setPassword] = useState("@Hai2002");
     const [valid1, setValid1] = useState(false);
     const [valid2, setValid2] = useState(false);
     const navigation = useNavigation();

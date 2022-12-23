@@ -128,7 +128,7 @@ function MainStackScreen() {
     const navigation = useNavigation()
 
     return (
-        <Stack.Navigator initialRouteName={SCREEN_NAMES.TabBar} screenOptions={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, headerShown: false }}>
+        <Stack.Navigator initialRouteName={SCREEN_NAMES.Login} screenOptions={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS, headerShown: false }}>
             <Stack.Screen name={SCREEN_NAMES.Login} component={LoginScreen} />
             <Stack.Screen name={SCREEN_NAMES.TabBar} component={TabBar} />
             <Stack.Screen name={SCREEN_NAMES.Register} component={RegisterScreen} />
