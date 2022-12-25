@@ -9,7 +9,6 @@ import {
     RefreshControl
 } from "react-native";
 import Footer from "../Layout/Footer";
-import { Rating } from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconF from 'react-native-vector-icons/FontAwesome';
 import { Button, Dialog } from '@rneui/themed';
@@ -49,9 +48,6 @@ export default function RoomDetailScreen(props) {
     const [valid4, setValid4] = useState(false)
     const [valid5, setValid5] = useState(false)
     let roomId = props.route.params.roomId;
-    const ratingCompleted = (rating) => {
-        console.log("Rating is: " + rating)
-    }
     useEffect(() => {
         roomDetail()
         // console.log(BASEAPI);
@@ -217,18 +213,6 @@ export default function RoomDetailScreen(props) {
                                         ID:{l.soPhong}
                                     </Text>
                                 </View>
-                                {/* <Text>
-                                    <Rating
-                                        type='custom'
-                                        ratingColor='gold'
-                                        ratingBackgroundColor='#c8c7c8'
-                                        ratingCount={5}
-                                        imageSize={11}
-                                        onFinishRating={ratingCompleted}
-                                        style={{ paddingVertical: 3 }}
-                                        startingValue={4}
-                                    />
-                                </Text> */}
                                 <Text style={styles.price}>
                                     Book for {l.giaPhong}$
                                 </Text>

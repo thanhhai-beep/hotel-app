@@ -19,12 +19,12 @@ export default function AboutScreen() {
             <Header />
             <ScrollView>
                 <View style={{ padding: 20 }}>
-                    <Text style={{ fontSize: 20, fontWeight: "500" }}>Best Homie Hotel in HCM since 2000. Our hotel has been present for over 22 years.</Text>
+                    <Text style={{ fontSize: 20, fontWeight: "500" }}>Best Bambuu Hotel in HCM since 2000. Our hotel has been present for over 22 years.</Text>
                     <Text style={{ color: "#888888", marginTop: 10 }} >
-                        Homie hotel is uniquely decorated in Asian style according to three-star standard, located in the center of Cach Mang Thang 8 Street, District 3. We combine a business strategy with more than 20 years of the hospitality industry, embrace new opportunities and distribution channels to expand internet technology for hotel to give consumers direct access easier.
+                        Bambuu hotel is uniquely decorated in Asian style according to three-star standard, located in the center of Cach Mang Thang 8 Street, District 3. We combine a business strategy with more than 20 years of the hospitality industry, embrace new opportunities and distribution channels to expand internet technology for hotel to give consumers direct access easier.
                     </Text>
                     <Text style={{ color: "#888888", marginTop: 10 }}>
-                        Homie Hotel aims to be one of the leading hotels in Vietnam providing hotel reservations and services for customers via internet. Customers going on a business or entertaining will surely be impressed with the hospitality, professional service and convenience with Homie Hotel's motto: "The spirit of Vietnamese hospitality"
+                        Bambuu Hotel aims to be one of the leading hotels in Vietnam providing hotel reservations and services for customers via internet. Customers going on a business or entertaining will surely be impressed with the hospitality, professional service and convenience with Bambuu Hotel's motto: "The spirit of Vietnamese hospitality"
                     </Text>
                 </View>
                 <View style={styles.service}>

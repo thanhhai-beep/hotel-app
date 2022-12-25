@@ -34,14 +34,14 @@ export default function ServiceScreen() {
                 />
             }>
                 <View style={styles.service}>
-                    <Text style={styles.title}>Homie Hotel Services</Text>
+                    <Text style={styles.title}>Bambuu Hotel Services</Text>
                     <Text style={styles.desc}>Typically, the basic hotel services include reception guests, room service, food service, restaurants in the hotel and security. Other services offered to guests of the hotel, can be considered as bonuses. These are the laundry service, massage room, fitness gyms, conference rooms, lock boxes for valuable assets and many other things. These services can be included in the price of the room or paid separately.</Text>
                     <View style={styles.serviceItem}>
                         <View style={styles.serviceIcon}>
                             <Icon name="swimming-pool" style={styles.icon} />
                         </View>
                         <Text style={{ fontSize: 16, color: "#888888", paddingBottom: 5 }}>Fitness Zone</Text>
-                        <Text style={{ fontSize: 20, paddingBottom: 8 }}>Homie Hotel Services</Text>
+                        <Text style={{ fontSize: 20, paddingBottom: 8 }}>Bambuu Hotel Services</Text>
                         <Text style={styles.desc}>Enjoy breathtaking views of the city while relaxing by the roof top swimming pool with soothing music or some great cocktails.</Text>
                     </View>
                     <View style={styles.serviceItem}>

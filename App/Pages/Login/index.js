@@ -96,9 +96,6 @@ export default function LoginScreen() {
                     />
                 </View>
                 {valid2 ? <Text style={styles.validate}>Please enter your Password</Text> : ''}
-                <TouchableOpacity>
-                    <Text style={styles.forgot_button}>Forgot Password?</Text>
-                </TouchableOpacity>
 
                 <TouchableOpacity style={styles.loginBtn}
                     onPress={handleLogin}

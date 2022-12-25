@@ -120,7 +120,7 @@ export default function ContactScreen() {
                     <Text style={{ fontSize: 18, color: "#777777" }}>Get in touch</Text>
                     <Text style={styles.title}>Contact and Access</Text>
                     <Text style={styles.desc}>
-                        Officially opened in December 2019, Homie Hotel, MGallery Collection is located in the centre of Ho Chi Minh's most vibrant district, just away from Notre Dame Cathedral, Opera House, Central Post Office. history and other key tourist attractions a few kilometers. The hotel is just 20 minutes drive from Tan Son Nhat international Airport.
+                        Officially opened in December 2019, Bambuu Hotel, MGallery Collection is located in the centre of Ho Chi Minh's most vibrant district, just away from Notre Dame Cathedral, Opera House, Central Post Office. history and other key tourist attractions a few kilometers. The hotel is just 20 minutes drive from Tan Son Nhat international Airport.
                     </Text>
                 </View>
                 <View style={styles.maps}>
